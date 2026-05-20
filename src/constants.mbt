@@ -60,9 +60,3 @@ let option_dropedges = 19
 
 ///|
 let option_no2hop = 20
-
-///|
-let option_twohop = 21
-
-///|
-let option_fast = 22

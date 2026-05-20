@@ -88,7 +88,6 @@ pub fn Options::set_connected_component_ordering(Self, Bool) -> Self
 pub fn Options::set_contiguous(Self, Bool) -> Self
 pub fn Options::set_debug_level(Self, Int) -> Self
 pub fn Options::set_drop_edges(Self, Bool) -> Self
-pub fn Options::set_fast(Self, Bool) -> Self
 pub fn Options::set_imbalance_factor(Self, Int) -> Self
 pub fn Options::set_initial_partitioning_scheme(Self, InitialPartitioningScheme) -> Self
 pub fn Options::set_minimize_connectivity(Self, Bool) -> Self
@@ -103,7 +102,6 @@ pub fn Options::set_partitioning_scheme(Self, PartitioningScheme) -> Self
 pub fn Options::set_pruning_factor(Self, Int) -> Self
 pub fn Options::set_refinement_scheme(Self, RefinementScheme) -> Self
 pub fn Options::set_seed(Self, Int) -> Self
-pub fn Options::set_two_hop(Self, Bool) -> Self
 
 pub(all) struct OrderingResult {
   perm : FixedArray[Int]

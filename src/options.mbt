@@ -253,15 +253,3 @@ pub fn Options::set_no_two_hop(self : Options, enabled : Bool) -> Options {
   self.values[option_no2hop] = if enabled { 1 } else { 0 }
   self
 }
-
-///|
-pub fn Options::set_two_hop(self : Options, enabled : Bool) -> Options {
-  self.values[option_twohop] = if enabled { 1 } else { 0 }
-  self
-}
-
-///|
-pub fn Options::set_fast(self : Options, enabled : Bool) -> Options {
-  self.values[option_fast] = if enabled { 1 } else { 0 }
-  self
-}
