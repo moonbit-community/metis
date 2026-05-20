@@ -138,6 +138,19 @@ test "vertex separator" {
 }
 
 ///|
+test "node refine accepts weighted graph inputs" {
+  let graph = sample_graph()
+  let separator = compute_vertex_separator(graph)
+  let vwgt = FixedArray::make(graph.nvtxs(), 1)
+  let hmarker = FixedArray::make(graph.nvtxs(), -1)
+  let refined = node_refine(graph, vwgt, separator.part, hmarker, 1.05)
+  inspect(refined.length(), content="4")
+  for value in refined {
+    guard value >= 0 && value <= 2
+  }
+}
+
+///|
 test "options are accepted by metis" {
   let graph = sample_graph()
   let options = Options::default()

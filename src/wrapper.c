@@ -422,8 +422,8 @@ moonbit_metis_node_refine(
   return METIS_NodeRefine(
     nvtxs,
     (idx_t *)xadj,
-    (idx_t *)adjncy,
     (idx_t *)vwgt,
+    (idx_t *)adjncy,
     (idx_t *)where,
     (idx_t *)hmarker,
     (real_t)ubfactor
