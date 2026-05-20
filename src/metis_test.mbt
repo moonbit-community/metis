@@ -29,6 +29,16 @@ fn assert_permutation(perm : FixedArray[Int], iperm : FixedArray[Int]) -> Unit {
 }
 
 ///|
+fn assert_is_permutation(perm : FixedArray[Int]) -> Unit {
+  let seen = FixedArray::make(perm.length(), false)
+  for value in perm {
+    guard value >= 0 && value < perm.length()
+    guard !seen[value]
+    seen[value] = true
+  }
+}
+
+///|
 fn fail() -> Unit {
   guard false
 }
@@ -101,11 +111,42 @@ test "part mesh dual" {
 }
 
 ///|
+test "part mesh nodal" {
+  let mesh = sample_mesh()
+  let options = Options::default().set_partitioning_scheme(Kway)
+  let result = part_mesh_nodal(mesh, 2, options~)
+  inspect(result.epart.length(), content="2")
+  inspect(result.npart.length(), content="4")
+  assert_partition(result.epart, 2)
+  assert_partition(result.npart, 2)
+}
+
+///|
+test "cache friendly reordering" {
+  let graph = sample_graph()
+  let result = part_graph_kway(graph, 2)
+  let old2new = cache_friendly_reordering(graph, result.part)
+  assert_is_permutation(old2new)
+}
+
+///|
 test "vertex separator" {
   let graph = sample_graph()
   let result = compute_vertex_separator(graph)
   inspect(result.part.length(), content="4")
   guard result.sepsize >= 0
+}
+
+///|
+test "options are accepted by metis" {
+  let graph = sample_graph()
+  let options = Options::default()
+    .set_number_of_cuts(2)
+    .set_number_of_iterations(5)
+    .set_seed(7)
+    .set_objective_type(Cut)
+  let result = part_graph_kway(graph, 2, options~)
+  assert_partition(result.part, 2)
 }
 
 ///|
@@ -115,6 +156,17 @@ test "invalid csr is rejected before ffi" {
     guard false
   } catch {
     InvalidGraph => ()
+    _ => fail()
+  }
+}
+
+///|
+test "invalid mesh is rejected before ffi" {
+  try {
+    ignore(Mesh::new(1, 2, [0, 3], [0, 1]))
+    fail()
+  } catch {
+    InvalidMesh => ()
     _ => fail()
   }
 }

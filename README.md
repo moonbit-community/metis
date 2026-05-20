@@ -19,6 +19,7 @@ Validate:
 ```bash
 moon check --target native
 moon test --target native
+python3 scripts/test.py --asan
 moon fmt
 moon info --target native
 ```
