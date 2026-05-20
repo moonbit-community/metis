@@ -1,3 +1,5 @@
+supported_targets = "native+llvm"
+
 options(
   "native-stub": [
     "wrapper.c",
@@ -75,5 +77,6 @@ options(
     "separator.mbt": [ "native", "llvm" ],
     "version.mbt": [ "native", "llvm" ],
     "metis_test.mbt": [ "native", "llvm" ],
+    "README.mbt.md": [ "native", "llvm" ],
   },
 )
