@@ -1,0 +1,120 @@
+///|
+fn sample_graph() -> CsrGraph raise MetisError {
+  CsrGraph::new(4, [0, 2, 4, 6, 8], [1, 3, 0, 2, 1, 3, 0, 2])
+}
+
+///|
+fn sample_mesh() -> Mesh raise MetisError {
+  Mesh::new(2, 4, [0, 3, 6], [0, 1, 2, 1, 2, 3])
+}
+
+///|
+fn assert_partition(part : FixedArray[Int], nparts : Int) -> Unit {
+  for value in part {
+    guard value >= 0 && value < nparts
+  }
+}
+
+///|
+fn assert_permutation(perm : FixedArray[Int], iperm : FixedArray[Int]) -> Unit {
+  guard perm.length() == iperm.length()
+  let seen = FixedArray::make(perm.length(), false)
+  for i in 0..<perm.length() {
+    let p = perm[i]
+    guard p >= 0 && p < perm.length()
+    guard !seen[p]
+    seen[p] = true
+    guard iperm[p] == i
+  }
+}
+
+///|
+fn fail() -> Unit {
+  guard false
+}
+
+///|
+test "version" {
+  let (major, minor, subminor) = version()
+  guard major == 5
+  guard minor == 2
+  guard subminor == 1
+  guard native_option_count() == 40
+}
+
+///|
+test "part graph kway" {
+  let graph = sample_graph()
+  let result = part_graph_kway(graph, 2)
+  inspect(result.part.length(), content="4")
+  assert_partition(result.part, 2)
+  guard result.objval >= 0
+}
+
+///|
+test "part graph recursive" {
+  let graph = sample_graph()
+  let result = part_graph_recursive(graph, 2)
+  inspect(result.part.length(), content="4")
+  assert_partition(result.part, 2)
+  guard result.objval >= 0
+}
+
+///|
+test "node ordering" {
+  let graph = sample_graph()
+  let result = node_nd(graph)
+  assert_permutation(result.perm, result.iperm)
+}
+
+///|
+test "mesh to dual" {
+  let mesh = sample_mesh()
+  let graph = mesh_to_dual(mesh, ncommon=2)
+  let xadj = graph.xadj()
+  let adjncy = graph.adjncy()
+  guard xadj.length() == 3
+  guard xadj[0] == 0
+  guard xadj[1] == 1
+  guard xadj[2] == 2
+  guard adjncy.length() == 2
+  guard adjncy[0] == 1
+  guard adjncy[1] == 0
+}
+
+///|
+test "mesh to nodal" {
+  let mesh = sample_mesh()
+  let graph = mesh_to_nodal(mesh)
+  inspect(graph.nvtxs(), content="4")
+  guard graph.xadj().length() == 5
+}
+
+///|
+test "part mesh dual" {
+  let mesh = sample_mesh()
+  let result = part_mesh_dual(mesh, 2, ncommon=2)
+  inspect(result.epart.length(), content="2")
+  inspect(result.npart.length(), content="4")
+  assert_partition(result.epart, 2)
+  assert_partition(result.npart, 2)
+}
+
+///|
+test "vertex separator" {
+  let graph = sample_graph()
+  let result = compute_vertex_separator(graph)
+  inspect(result.part.length(), content="4")
+  guard result.sepsize >= 0
+}
+
+///|
+test "invalid csr is rejected before ffi" {
+  try {
+    ignore(CsrGraph::new(2, [0, 3], [1]))
+    guard false
+  } catch {
+    InvalidGraph => ()
+    _ => fail()
+  }
+}

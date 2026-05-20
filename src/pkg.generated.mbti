@@ -1,0 +1,150 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbit-community/metis"
+
+// Values
+pub fn cache_friendly_reordering(CsrGraph, FixedArray[Int]) -> FixedArray[Int] raise MetisError
+
+pub fn compute_vertex_separator(CsrGraph, options? : Options) -> VertexSeparatorResult raise MetisError
+
+pub fn mesh_to_dual(Mesh, ncommon? : Int) -> CsrGraph raise MetisError
+
+pub fn mesh_to_nodal(Mesh) -> CsrGraph raise MetisError
+
+pub fn native_option_count() -> Int
+
+pub fn node_nd(CsrGraph, options? : Options) -> OrderingResult raise MetisError
+
+pub fn node_ndp(CsrGraph, Int, Int, options? : Options) -> ParallelOrderingResult raise MetisError
+
+pub fn node_refine(CsrGraph, FixedArray[Int], FixedArray[Int], FixedArray[Int], Float) -> FixedArray[Int] raise MetisError
+
+pub fn part_graph_kway(CsrGraph, Int, options? : Options, target_partition_weights? : FixedArray[Float], imbalance? : FixedArray[Float]) -> PartitionResult raise MetisError
+
+pub fn part_graph_recursive(CsrGraph, Int, options? : Options, target_partition_weights? : FixedArray[Float], imbalance? : FixedArray[Float]) -> PartitionResult raise MetisError
+
+pub fn part_mesh_dual(Mesh, Int, ncommon? : Int, options? : Options, target_partition_weights? : FixedArray[Float]) -> MeshPartitionResult raise MetisError
+
+pub fn part_mesh_nodal(Mesh, Int, options? : Options, target_partition_weights? : FixedArray[Float]) -> MeshPartitionResult raise MetisError
+
+pub fn version() -> (Int, Int, Int)
+
+// Errors
+pub(all) suberror MetisError {
+  Input
+  Memory
+  Error
+  InvalidGraph
+  InvalidMesh
+  InvalidOptions
+  UnsupportedIndexWidth
+} derive(Eq, Hash)
+
+// Types and methods
+pub(all) enum CoarseningScheme {
+  RandomMatching
+  SortedHeavyEdgeMatching
+}
+
+pub struct CsrGraph {
+  // private fields
+}
+pub fn CsrGraph::adjncy(Self) -> FixedArray[Int]
+pub fn CsrGraph::new(Int, FixedArray[Int], FixedArray[Int], ncon? : Int, vwgt? : FixedArray[Int], vsize? : FixedArray[Int], adjwgt? : FixedArray[Int]) -> Self raise MetisError
+pub fn CsrGraph::nvtxs(Self) -> Int
+pub fn CsrGraph::xadj(Self) -> FixedArray[Int]
+
+pub(all) enum InitialPartitioningScheme {
+  Grow
+  Random
+  Edge
+  Node
+  MetisRecursiveBisection
+}
+
+pub struct Mesh {
+  // private fields
+}
+pub fn Mesh::new(Int, Int, FixedArray[Int], FixedArray[Int], vwgt? : FixedArray[Int], vsize? : FixedArray[Int]) -> Self raise MetisError
+
+pub(all) struct MeshPartitionResult {
+  objval : Int
+  epart : FixedArray[Int]
+  npart : FixedArray[Int]
+}
+
+pub(all) enum Numbering {
+  C
+  Fortran
+}
+
+pub(all) enum ObjectiveType {
+  Cut
+  Volume
+  Node
+}
+
+pub struct Options {
+  // private fields
+}
+pub fn Options::default() -> Self
+pub fn Options::set_coarsening_scheme(Self, CoarseningScheme) -> Self
+pub fn Options::set_compress(Self, Bool) -> Self
+pub fn Options::set_connected_component_ordering(Self, Bool) -> Self
+pub fn Options::set_contiguous(Self, Bool) -> Self
+pub fn Options::set_debug_level(Self, Int) -> Self
+pub fn Options::set_drop_edges(Self, Bool) -> Self
+pub fn Options::set_fast(Self, Bool) -> Self
+pub fn Options::set_imbalance_factor(Self, Int) -> Self
+pub fn Options::set_initial_partitioning_scheme(Self, InitialPartitioningScheme) -> Self
+pub fn Options::set_minimize_connectivity(Self, Bool) -> Self
+pub fn Options::set_no_two_hop(Self, Bool) -> Self
+pub fn Options::set_number_of_cuts(Self, Int) -> Self
+pub fn Options::set_number_of_initial_partitions(Self, Int) -> Self
+pub fn Options::set_number_of_iterations(Self, Int) -> Self
+pub fn Options::set_number_of_separators(Self, Int) -> Self
+pub fn Options::set_numbering(Self, Numbering) -> Self
+pub fn Options::set_objective_type(Self, ObjectiveType) -> Self
+pub fn Options::set_on_disk(Self, Bool) -> Self
+pub fn Options::set_partitioning_scheme(Self, PartitioningScheme) -> Self
+pub fn Options::set_pruning_factor(Self, Int) -> Self
+pub fn Options::set_refinement_scheme(Self, RefinementScheme) -> Self
+pub fn Options::set_seed(Self, Int) -> Self
+pub fn Options::set_two_hop(Self, Bool) -> Self
+
+pub(all) struct OrderingResult {
+  perm : FixedArray[Int]
+  iperm : FixedArray[Int]
+}
+
+pub(all) struct ParallelOrderingResult {
+  perm : FixedArray[Int]
+  iperm : FixedArray[Int]
+  sizes : FixedArray[Int]
+}
+
+pub(all) struct PartitionResult {
+  objval : Int
+  part : FixedArray[Int]
+}
+
+pub(all) enum PartitioningScheme {
+  RecursiveBisection
+  Kway
+}
+
+pub(all) enum RefinementScheme {
+  Fm
+  Greedy
+  SeparatorTwoSided
+  SeparatorOneSided
+}
+
+pub(all) struct VertexSeparatorResult {
+  sepsize : Int
+  part : FixedArray[Int]
+}
+
+// Type aliases
+
+// Traits
+
