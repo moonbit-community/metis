@@ -10,6 +10,10 @@ Graphs and meshes use MoonBit/C-style zero-based numbering. The safe API does
 not expose METIS' Fortran-numbering option because that mode renumbers input
 arrays in place inside METIS.
 
+`Mesh` stores only element connectivity. Mesh partitioning weights are supplied
+at the call site because `part_mesh_nodal` expects node weights of length `nn`,
+while `part_mesh_dual` expects element weights of length `ne`.
+
 ## Development
 
 Generate vendored C sources:

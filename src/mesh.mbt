@@ -4,8 +4,6 @@ pub struct Mesh {
   priv nn : Int
   priv eptr : FixedArray[Int]
   priv eind : FixedArray[Int]
-  priv vwgt : FixedArray[Int]?
-  priv vsize : FixedArray[Int]?
 }
 
 ///|
@@ -21,10 +19,8 @@ pub fn Mesh::new(
   nn : Int,
   eptr : FixedArray[Int],
   eind : FixedArray[Int],
-  vwgt? : FixedArray[Int],
-  vsize? : FixedArray[Int],
 ) -> Mesh raise MetisError {
-  let mesh = { ne, nn, eptr, eind, vwgt, vsize }
+  let mesh = { ne, nn, eptr, eind }
   mesh.validate()
   mesh
 }
@@ -52,14 +48,6 @@ fn Mesh::validate(self : Mesh) -> Unit raise MetisError {
     if node < 0 || node >= self.nn {
       raise InvalidMesh
     }
-  }
-  match self.vwgt {
-    None => ()
-    Some(vwgt) => if vwgt.length() != self.nn { raise InvalidMesh }
-  }
-  match self.vsize {
-    None => ()
-    Some(vsize) => if vsize.length() != self.nn { raise InvalidMesh }
   }
 }
 
@@ -123,13 +111,28 @@ fn validate_mesh_partition_inputs(
 }
 
 ///|
+fn validate_optional_int_array(
+  value : FixedArray[Int]?,
+  expected_length : Int,
+) -> Unit raise MetisError {
+  match value {
+    None => ()
+    Some(value) => if value.length() != expected_length { raise InvalidOptions }
+  }
+}
+
+///|
 pub fn part_mesh_nodal(
   mesh : Mesh,
   nparts : Int,
   options? : Options,
   target_partition_weights? : FixedArray[Float],
+  node_weights? : FixedArray[Int],
+  node_sizes? : FixedArray[Int],
 ) -> MeshPartitionResult raise MetisError {
   validate_mesh_partition_inputs(mesh, nparts, target_partition_weights)
+  validate_optional_int_array(node_weights, mesh.nn)
+  validate_optional_int_array(node_sizes, mesh.nn)
   let options = option_or_default(options)
   let objval = Ref(0)
   let epart = FixedArray::make(mesh.ne, 0)
@@ -139,8 +142,8 @@ pub fn part_mesh_nodal(
     mesh.nn,
     mesh.eptr,
     mesh.eind,
-    int_array_or_empty(mesh.vwgt),
-    int_array_or_empty(mesh.vsize),
+    int_array_or_empty(node_weights),
+    int_array_or_empty(node_sizes),
     nparts,
     float_array_or_empty(target_partition_weights),
     options.raw(),
@@ -159,8 +162,12 @@ pub fn part_mesh_dual(
   ncommon? : Int = 1,
   options? : Options,
   target_partition_weights? : FixedArray[Float],
+  element_weights? : FixedArray[Int],
+  element_sizes? : FixedArray[Int],
 ) -> MeshPartitionResult raise MetisError {
   validate_mesh_partition_inputs(mesh, nparts, target_partition_weights)
+  validate_optional_int_array(element_weights, mesh.ne)
+  validate_optional_int_array(element_sizes, mesh.ne)
   if ncommon < 1 {
     raise InvalidOptions
   }
@@ -173,8 +180,8 @@ pub fn part_mesh_dual(
     mesh.nn,
     mesh.eptr,
     mesh.eind,
-    int_array_or_empty(mesh.vwgt),
-    int_array_or_empty(mesh.vsize),
+    int_array_or_empty(element_weights),
+    int_array_or_empty(element_sizes),
     ncommon,
     nparts,
     float_array_or_empty(target_partition_weights),

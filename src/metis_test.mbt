@@ -130,6 +130,40 @@ test "part mesh nodal" {
 }
 
 ///|
+test "mesh partition weights are scoped by graph kind" {
+  let mesh = sample_mesh()
+  let nodal = part_mesh_nodal(
+    mesh,
+    2,
+    node_weights=FixedArray::make(4, 1),
+    node_sizes=FixedArray::make(4, 1),
+  )
+  assert_partition(nodal.npart, 2)
+  let dual = part_mesh_dual(
+    mesh,
+    2,
+    ncommon=2,
+    element_weights=FixedArray::make(2, 1),
+    element_sizes=FixedArray::make(2, 1),
+  )
+  assert_partition(dual.epart, 2)
+  try {
+    ignore(part_mesh_nodal(mesh, 2, node_weights=FixedArray::make(2, 1)))
+    fail()
+  } catch {
+    InvalidOptions => ()
+    _ => fail()
+  }
+  try {
+    ignore(part_mesh_dual(mesh, 2, element_weights=FixedArray::make(4, 1)))
+    fail()
+  } catch {
+    InvalidOptions => ()
+    _ => fail()
+  }
+}
+
+///|
 test "cache friendly reordering" {
   let graph = sample_graph()
   let result = part_graph_kway(graph, 2)

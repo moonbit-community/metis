@@ -22,9 +22,9 @@ pub fn part_graph_kway(CsrGraph, Int, options? : Options, target_partition_weigh
 
 pub fn part_graph_recursive(CsrGraph, Int, options? : Options, target_partition_weights? : FixedArray[Float], imbalance? : FixedArray[Float]) -> PartitionResult raise MetisError
 
-pub fn part_mesh_dual(Mesh, Int, ncommon? : Int, options? : Options, target_partition_weights? : FixedArray[Float]) -> MeshPartitionResult raise MetisError
+pub fn part_mesh_dual(Mesh, Int, ncommon? : Int, options? : Options, target_partition_weights? : FixedArray[Float], element_weights? : FixedArray[Int], element_sizes? : FixedArray[Int]) -> MeshPartitionResult raise MetisError
 
-pub fn part_mesh_nodal(Mesh, Int, options? : Options, target_partition_weights? : FixedArray[Float]) -> MeshPartitionResult raise MetisError
+pub fn part_mesh_nodal(Mesh, Int, options? : Options, target_partition_weights? : FixedArray[Float], node_weights? : FixedArray[Int], node_sizes? : FixedArray[Int]) -> MeshPartitionResult raise MetisError
 
 pub fn version() -> (Int, Int, Int)
 
@@ -64,7 +64,7 @@ pub(all) enum InitialPartitioningScheme {
 pub struct Mesh {
   // private fields
 }
-pub fn Mesh::new(Int, Int, FixedArray[Int], FixedArray[Int], vwgt? : FixedArray[Int], vsize? : FixedArray[Int]) -> Self raise MetisError
+pub fn Mesh::new(Int, Int, FixedArray[Int], FixedArray[Int]) -> Self raise MetisError
 
 pub(all) struct MeshPartitionResult {
   objval : Int
