@@ -17,7 +17,6 @@ pub fn compute_vertex_separator(
     graph.nvtxs,
     graph.xadj,
     graph.adjncy,
-    use_int_array(graph.vwgt),
     int_array_or_empty(graph.vwgt),
     options.raw(),
     sepsize,

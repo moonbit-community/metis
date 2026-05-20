@@ -84,14 +84,6 @@ fn CsrGraph::validate(self : CsrGraph) -> Unit raise MetisError {
 }
 
 ///|
-fn use_int_array(value : FixedArray[Int]?) -> Bool {
-  match value {
-    None => false
-    Some(_) => true
-  }
-}
-
-///|
 fn int_array_or_empty(value : FixedArray[Int]?) -> FixedArray[Int] {
   match value {
     None => []
