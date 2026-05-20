@@ -1,5 +1,3 @@
-supported_targets = "native+llvm"
-
 options(
   "native-stub": [
     "wrapper.c",

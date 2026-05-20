@@ -7,5 +7,6 @@
   "keywords": ["metis", "graph", "partitioning", "mesh", "ordering"],
   "description": "MoonBit bindings to METIS",
   "source": "src",
-  "preferred-target": "native"
+  "preferred-target": "native",
+  "supported-targets": "native+llvm"
 }
