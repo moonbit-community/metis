@@ -72,11 +72,6 @@ pub(all) struct MeshPartitionResult {
   npart : FixedArray[Int]
 }
 
-pub(all) enum Numbering {
-  C
-  Fortran
-}
-
 pub(all) enum ObjectiveType {
   Cut
   Volume
@@ -102,7 +97,6 @@ pub fn Options::set_number_of_cuts(Self, Int) -> Self
 pub fn Options::set_number_of_initial_partitions(Self, Int) -> Self
 pub fn Options::set_number_of_iterations(Self, Int) -> Self
 pub fn Options::set_number_of_separators(Self, Int) -> Self
-pub fn Options::set_numbering(Self, Numbering) -> Self
 pub fn Options::set_objective_type(Self, ObjectiveType) -> Self
 pub fn Options::set_on_disk(Self, Bool) -> Self
 pub fn Options::set_partitioning_scheme(Self, PartitioningScheme) -> Self

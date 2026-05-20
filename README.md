@@ -6,6 +6,10 @@ This package vendors the upstream METIS and GKlib C sources into MoonBit native
 stubs. The initial ABI uses 32-bit `idx_t` and 32-bit `real_t`, matching the
 standard METIS build.
 
+Graphs and meshes use MoonBit/C-style zero-based numbering. The safe API does
+not expose METIS' Fortran-numbering option because that mode renumbers input
+arrays in place inside METIS.
+
 ## Development
 
 Generate vendored C sources:

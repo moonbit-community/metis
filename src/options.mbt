@@ -4,20 +4,6 @@ pub struct Options {
 }
 
 ///|
-pub(all) enum Numbering {
-  C
-  Fortran
-}
-
-///|
-fn Numbering::to_int(self : Numbering) -> Int {
-  match self {
-    C => 0
-    Fortran => 1
-  }
-}
-
-///|
 pub(all) enum PartitioningScheme {
   RecursiveBisection
   Kway
@@ -166,12 +152,6 @@ pub fn Options::set_refinement_scheme(
 ///|
 pub fn Options::set_debug_level(self : Options, level : Int) -> Options {
   self.values[option_dbglvl] = level
-  self
-}
-
-///|
-pub fn Options::set_numbering(self : Options, numbering : Numbering) -> Options {
-  self.values[option_numbering] = numbering.to_int()
   self
 }
 

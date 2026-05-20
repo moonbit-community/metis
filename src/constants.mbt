@@ -56,9 +56,6 @@ let option_nseps = 16
 let option_ufactor = 17
 
 ///|
-let option_numbering = 18
-
-///|
 let option_dropedges = 19
 
 ///|
