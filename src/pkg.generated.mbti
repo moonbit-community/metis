@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "moonbit-community/metis"
+package "Milky2018/metis"
 
 // Values
 pub fn cache_friendly_reordering(CsrGraph, FixedArray[Int]) -> FixedArray[Int] raise MetisError
