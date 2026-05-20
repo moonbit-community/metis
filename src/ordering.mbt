@@ -38,17 +38,16 @@ pub fn node_nd(
 pub fn node_ndp(
   graph : CsrGraph,
   npes : Int,
-  sizes_len : Int,
   options? : Options,
 ) -> ParallelOrderingResult raise MetisError {
   graph.validate()
-  if npes <= 0 || sizes_len <= 0 {
+  if npes <= 0 {
     raise InvalidOptions
   }
   let options = option_or_default(options)
   let perm = FixedArray::make(graph.nvtxs, 0)
   let iperm = FixedArray::make(graph.nvtxs, 0)
-  let sizes = FixedArray::make(sizes_len, 0)
+  let sizes = FixedArray::make(2 * npes - 1, 0)
   let status = metis_node_ndp_ffi(
     graph.nvtxs,
     graph.xadj,

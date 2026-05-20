@@ -14,7 +14,7 @@ pub fn native_option_count() -> Int
 
 pub fn node_nd(CsrGraph, options? : Options) -> OrderingResult raise MetisError
 
-pub fn node_ndp(CsrGraph, Int, Int, options? : Options) -> ParallelOrderingResult raise MetisError
+pub fn node_ndp(CsrGraph, Int, options? : Options) -> ParallelOrderingResult raise MetisError
 
 pub fn node_refine(CsrGraph, FixedArray[Int], FixedArray[Int], FixedArray[Int], Float) -> FixedArray[Int] raise MetisError
 

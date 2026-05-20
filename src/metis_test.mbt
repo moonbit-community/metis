@@ -78,6 +78,14 @@ test "node ordering" {
 }
 
 ///|
+test "parallel node ordering allocates separator sizes" {
+  let graph = sample_graph()
+  let result = node_ndp(graph, 2)
+  assert_permutation(result.perm, result.iperm)
+  inspect(result.sizes.length(), content="3")
+}
+
+///|
 test "mesh to dual" {
   let mesh = sample_mesh()
   let graph = mesh_to_dual(mesh, ncommon=2)
