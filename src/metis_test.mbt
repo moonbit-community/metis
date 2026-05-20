@@ -216,9 +216,31 @@ test "invalid csr is rejected before ffi" {
 }
 
 ///|
+test "empty graph is rejected before ffi" {
+  try {
+    ignore(CsrGraph::new(0, [0], []))
+    fail()
+  } catch {
+    InvalidGraph => ()
+    _ => fail()
+  }
+}
+
+///|
 test "invalid mesh is rejected before ffi" {
   try {
     ignore(Mesh::new(1, 2, [0, 3], [0, 1]))
+    fail()
+  } catch {
+    InvalidMesh => ()
+    _ => fail()
+  }
+}
+
+///|
+test "empty mesh is rejected before ffi" {
+  try {
+    ignore(Mesh::new(0, 0, [0], []))
     fail()
   } catch {
     InvalidMesh => ()

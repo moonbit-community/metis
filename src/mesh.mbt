@@ -27,7 +27,7 @@ pub fn Mesh::new(
 
 ///|
 fn Mesh::validate(self : Mesh) -> Unit raise MetisError {
-  if self.ne < 0 || self.nn < 0 {
+  if self.ne <= 0 || self.nn <= 0 {
     raise InvalidMesh
   }
   if self.eptr.length() != self.ne + 1 {

@@ -41,7 +41,7 @@ pub fn CsrGraph::adjncy(self : CsrGraph) -> FixedArray[Int] {
 
 ///|
 fn CsrGraph::validate(self : CsrGraph) -> Unit raise MetisError {
-  if self.nvtxs < 0 || self.ncon <= 0 {
+  if self.nvtxs <= 0 || self.ncon <= 0 {
     raise InvalidGraph
   }
   if self.xadj.length() != self.nvtxs + 1 {
