@@ -86,6 +86,36 @@ fn RefinementScheme::to_int(self : RefinementScheme) -> Int {
 }
 
 ///|
+pub(all) enum DebugFlag {
+  Info
+  Time
+  Coarsen
+  Refine
+  InitialPartition
+  MoveInfo
+  SeparatorInfo
+  ConnectivityInfo
+  ContiguityInfo
+  Memory
+}
+
+///|
+fn DebugFlag::to_int(self : DebugFlag) -> Int {
+  match self {
+    Info => 1
+    Time => 2
+    Coarsen => 4
+    Refine => 8
+    InitialPartition => 16
+    MoveInfo => 32
+    SeparatorInfo => 64
+    ConnectivityInfo => 128
+    ContiguityInfo => 256
+    Memory => 2048
+  }
+}
+
+///|
 pub fn Options::default() -> Options {
   let values = FixedArray::make(metis_noptions, -1)
   { values, }
@@ -153,6 +183,18 @@ pub fn Options::set_refinement_scheme(
 pub fn Options::set_debug_level(self : Options, level : Int) -> Options {
   self.values[option_dbglvl] = level
   self
+}
+
+///|
+pub fn Options::set_debug_flags(
+  self : Options,
+  flags : FixedArray[DebugFlag],
+) -> Options {
+  let mut level = 0
+  for flag in flags {
+    level = level | flag.to_int()
+  }
+  self.set_debug_level(level)
 }
 
 ///|

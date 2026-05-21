@@ -48,10 +48,27 @@ pub(all) enum CoarseningScheme {
 pub struct CsrGraph {
   // private fields
 }
+pub fn CsrGraph::adjacency_weights(Self) -> FixedArray[Int]?
 pub fn CsrGraph::adjncy(Self) -> FixedArray[Int]
+pub fn CsrGraph::ncon(Self) -> Int
 pub fn CsrGraph::new(Int, FixedArray[Int], FixedArray[Int], ncon? : Int, vwgt? : FixedArray[Int], vsize? : FixedArray[Int], adjwgt? : FixedArray[Int]) -> Self raise MetisError
 pub fn CsrGraph::nvtxs(Self) -> Int
+pub fn CsrGraph::vertex_sizes(Self) -> FixedArray[Int]?
+pub fn CsrGraph::vertex_weights(Self) -> FixedArray[Int]?
 pub fn CsrGraph::xadj(Self) -> FixedArray[Int]
+
+pub(all) enum DebugFlag {
+  Info
+  Time
+  Coarsen
+  Refine
+  InitialPartition
+  MoveInfo
+  SeparatorInfo
+  ConnectivityInfo
+  ContiguityInfo
+  Memory
+}
 
 pub(all) enum InitialPartitioningScheme {
   Grow
@@ -64,7 +81,11 @@ pub(all) enum InitialPartitioningScheme {
 pub struct Mesh {
   // private fields
 }
+pub fn Mesh::eind(Self) -> FixedArray[Int]
+pub fn Mesh::eptr(Self) -> FixedArray[Int]
+pub fn Mesh::ne(Self) -> Int
 pub fn Mesh::new(Int, Int, FixedArray[Int], FixedArray[Int]) -> Self raise MetisError
+pub fn Mesh::nn(Self) -> Int
 
 pub(all) struct MeshPartitionResult {
   objval : Int
@@ -86,6 +107,7 @@ pub fn Options::set_coarsening_scheme(Self, CoarseningScheme) -> Self
 pub fn Options::set_compress(Self, Bool) -> Self
 pub fn Options::set_connected_component_ordering(Self, Bool) -> Self
 pub fn Options::set_contiguous(Self, Bool) -> Self
+pub fn Options::set_debug_flags(Self, FixedArray[DebugFlag]) -> Self
 pub fn Options::set_debug_level(Self, Int) -> Self
 pub fn Options::set_drop_edges(Self, Bool) -> Self
 pub fn Options::set_imbalance_factor(Self, Int) -> Self

@@ -30,6 +30,11 @@ pub fn CsrGraph::nvtxs(self : CsrGraph) -> Int {
 }
 
 ///|
+pub fn CsrGraph::ncon(self : CsrGraph) -> Int {
+  self.ncon
+}
+
+///|
 pub fn CsrGraph::xadj(self : CsrGraph) -> FixedArray[Int] {
   self.xadj
 }
@@ -37,6 +42,21 @@ pub fn CsrGraph::xadj(self : CsrGraph) -> FixedArray[Int] {
 ///|
 pub fn CsrGraph::adjncy(self : CsrGraph) -> FixedArray[Int] {
   self.adjncy
+}
+
+///|
+pub fn CsrGraph::vertex_weights(self : CsrGraph) -> FixedArray[Int]? {
+  self.vwgt
+}
+
+///|
+pub fn CsrGraph::vertex_sizes(self : CsrGraph) -> FixedArray[Int]? {
+  self.vsize
+}
+
+///|
+pub fn CsrGraph::adjacency_weights(self : CsrGraph) -> FixedArray[Int]? {
+  self.adjwgt
 }
 
 ///|

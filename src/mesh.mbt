@@ -26,6 +26,26 @@ pub fn Mesh::new(
 }
 
 ///|
+pub fn Mesh::ne(self : Mesh) -> Int {
+  self.ne
+}
+
+///|
+pub fn Mesh::nn(self : Mesh) -> Int {
+  self.nn
+}
+
+///|
+pub fn Mesh::eptr(self : Mesh) -> FixedArray[Int] {
+  self.eptr
+}
+
+///|
+pub fn Mesh::eind(self : Mesh) -> FixedArray[Int] {
+  self.eind
+}
+
+///|
 fn Mesh::validate(self : Mesh) -> Unit raise MetisError {
   if self.ne <= 0 || self.nn <= 0 {
     raise InvalidMesh

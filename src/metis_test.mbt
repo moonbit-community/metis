@@ -71,6 +71,41 @@ test "part graph recursive" {
 }
 
 ///|
+test "graph exposes all constructor inputs" {
+  let graph = CsrGraph::new(2, [0, 1, 2], [1, 0], vwgt=[2, 3], vsize=[1, 1], adjwgt=[
+    4, 4,
+  ])
+  inspect(graph.nvtxs(), content="2")
+  inspect(graph.ncon(), content="1")
+  inspect(graph.xadj().length(), content="3")
+  inspect(graph.adjncy().length(), content="2")
+  match graph.vertex_weights() {
+    Some(vwgt) => {
+      guard vwgt.length() == 2
+      guard vwgt[0] == 2
+      guard vwgt[1] == 3
+    }
+    None => fail()
+  }
+  match graph.vertex_sizes() {
+    Some(vsize) => {
+      guard vsize.length() == 2
+      guard vsize[0] == 1
+      guard vsize[1] == 1
+    }
+    None => fail()
+  }
+  match graph.adjacency_weights() {
+    Some(adjwgt) => {
+      guard adjwgt.length() == 2
+      guard adjwgt[0] == 4
+      guard adjwgt[1] == 4
+    }
+    None => fail()
+  }
+}
+
+///|
 test "node ordering" {
   let graph = sample_graph()
   let result = node_nd(graph)
@@ -88,6 +123,10 @@ test "parallel node ordering allocates separator sizes" {
 ///|
 test "mesh to dual" {
   let mesh = sample_mesh()
+  inspect(mesh.ne(), content="2")
+  inspect(mesh.nn(), content="4")
+  inspect(mesh.eptr().length(), content="3")
+  inspect(mesh.eind().length(), content="6")
   let graph = mesh_to_dual(mesh, ncommon=2)
   let xadj = graph.xadj()
   let adjncy = graph.adjncy()
@@ -202,6 +241,11 @@ test "options are accepted by metis" {
     .set_objective_type(Cut)
   let result = part_graph_kway(graph, 2, options~)
   assert_partition(result.part, 2)
+}
+
+///|
+test "typed debug flags can be configured" {
+  ignore(Options::default().set_debug_flags([Info, Time, Memory]))
 }
 
 ///|
