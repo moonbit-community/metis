@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    name: Test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install MoonBit
+        shell: bash
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+
+      - name: Show toolchain
+        shell: bash
+        run: |
+          moon version
+          moonc -v
+
+      - name: Check formatting
+        shell: bash
+        run: moon fmt --check
+
+      - name: Check all supported targets
+        shell: bash
+        run: moon check --target all --warn-list +73
+
+      - name: Run native tests
+        shell: bash
+        run: moon test --target native
+
+      - name: Run README doctests
+        shell: bash
+        run: moon test src/README.mbt.md --target native
+
+      - name: Verify generated interface
+        shell: bash
+        run: |
+          moon info --target native
+          git diff --exit-code src/pkg.generated.mbti
+
+      - name: Verify vendored sources are reproducible
+        shell: bash
+        run: |
+          python3 scripts/prepare.py
+          git diff --exit-code
+
+  asan:
+    name: ASan (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install MoonBit
+        shell: bash
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+
+      - name: Run ASan tests
+        shell: bash
+        run: python3 scripts/test.py --asan
