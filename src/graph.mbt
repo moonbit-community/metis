@@ -10,7 +10,6 @@ pub struct CsrGraph {
 }
 
 ///|
-#as_free_fn
 pub fn CsrGraph::CsrGraph(
   nvtxs : Int,
   xadj : FixedArray[Int],
