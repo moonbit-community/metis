@@ -28,7 +28,7 @@
   <path d="M70 42H1210" stroke="#dfe8dc" stroke-width="7" stroke-linecap="round"/>
   <path d="M70 42H760" stroke="#ef604b" stroke-width="7" stroke-linecap="round"/>
 
-  <text x="70" y="112" class="title">METIS from MoonBit</text>
+  <text x="70" y="112" class="title">METIS for MoonBit</text>
   <text x="72" y="148" class="subtitle">Build a graph, call the native partitioner, use the partition map.</text>
 
   <g filter="url(#shadow)">
