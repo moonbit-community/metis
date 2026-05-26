@@ -89,7 +89,7 @@ pub fn mesh_to_dual(
     0,
   )
   raise_status(native_graph_result_status(result))
-  CsrGraph::new(
+  CsrGraph(
     mesh.ne,
     native_graph_result_xadj(result),
     native_graph_result_adjncy(result),
@@ -107,7 +107,7 @@ pub fn mesh_to_nodal(mesh : Mesh) -> CsrGraph raise MetisError {
     0,
   )
   raise_status(native_graph_result_status(result))
-  CsrGraph::new(
+  CsrGraph(
     mesh.nn,
     native_graph_result_xadj(result),
     native_graph_result_adjncy(result),

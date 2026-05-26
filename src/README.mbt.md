@@ -45,7 +45,7 @@ moon test src/README.mbt.md --target native
 ```mbt check
 ///|
 test "partition a four-cycle graph" {
-  let graph = CsrGraph::new(4, [0, 2, 4, 6, 8], [1, 3, 0, 2, 1, 3, 0, 2])
+  let graph = @metis.CsrGraph(4, [0, 2, 4, 6, 8], [1, 3, 0, 2, 1, 3, 0, 2])
   let result = part_graph_kway(graph, 2)
   inspect(result.part.length(), content="4")
   for value in result.part {
@@ -59,7 +59,7 @@ test "partition a four-cycle graph" {
 ```mbt check
 ///|
 test "compute a node ordering" {
-  let graph = CsrGraph::new(4, [0, 2, 4, 6, 8], [1, 3, 0, 2, 1, 3, 0, 2])
+  let graph = @metis.CsrGraph(4, [0, 2, 4, 6, 8], [1, 3, 0, 2, 1, 3, 0, 2])
   let result = node_nd(graph)
   inspect(result.perm.length(), content="4")
   inspect(result.iperm.length(), content="4")

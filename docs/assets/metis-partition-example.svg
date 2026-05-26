@@ -36,7 +36,7 @@
     <text x="88" y="238" font-family="Arial, sans-serif" font-size="18" font-weight="900" fill="#2878d7">1. MoonBit input</text>
     <rect x="88" y="260" width="280" height="166" rx="8" fill="#172328"/>
     <text x="108" y="290" class="mono">let graph =</text>
-    <text x="108" y="322" class="mono">  CsrGraph::new(...)</text>
+    <text x="108" y="322" class="mono">  @metis.CsrGraph(...)</text>
     <text x="108" y="354" class="mono">let result =</text>
     <text x="108" y="386" class="mono-hot">  part_graph_kway(graph, 2)</text>
     <text x="108" y="414" class="mono">result.part</text>

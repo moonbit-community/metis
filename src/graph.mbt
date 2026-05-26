@@ -10,7 +10,21 @@ pub struct CsrGraph {
 }
 
 ///|
-pub fn CsrGraph::new(
+#as_free_fn
+pub fn CsrGraph::CsrGraph(
+  nvtxs : Int,
+  xadj : FixedArray[Int],
+  adjncy : FixedArray[Int],
+  ncon? : Int = 1,
+  vwgt? : FixedArray[Int],
+  vsize? : FixedArray[Int],
+  adjwgt? : FixedArray[Int],
+) -> CsrGraph raise MetisError {
+  make_csr_graph(nvtxs, xadj, adjncy, ncon~, vwgt?, vsize?, adjwgt?)
+}
+
+///|
+fn make_csr_graph(
   nvtxs : Int,
   xadj : FixedArray[Int],
   adjncy : FixedArray[Int],
@@ -22,6 +36,19 @@ pub fn CsrGraph::new(
   let graph = { nvtxs, ncon, xadj, adjncy, vwgt, vsize, adjwgt }
   graph.validate()
   graph
+}
+
+///|
+pub fn CsrGraph::new(
+  nvtxs : Int,
+  xadj : FixedArray[Int],
+  adjncy : FixedArray[Int],
+  ncon? : Int = 1,
+  vwgt? : FixedArray[Int],
+  vsize? : FixedArray[Int],
+  adjwgt? : FixedArray[Int],
+) -> CsrGraph raise MetisError {
+  make_csr_graph(nvtxs, xadj, adjncy, ncon~, vwgt?, vsize?, adjwgt?)
 }
 
 ///|

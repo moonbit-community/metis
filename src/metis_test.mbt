@@ -1,6 +1,6 @@
 ///|
 fn sample_graph() -> CsrGraph raise MetisError {
-  CsrGraph::new(4, [0, 2, 4, 6, 8], [1, 3, 0, 2, 1, 3, 0, 2])
+  @metis.CsrGraph(4, [0, 2, 4, 6, 8], [1, 3, 0, 2, 1, 3, 0, 2])
 }
 
 ///|
@@ -72,9 +72,15 @@ test "part graph recursive" {
 
 ///|
 test "graph exposes all constructor inputs" {
-  let graph = CsrGraph::new(2, [0, 1, 2], [1, 0], vwgt=[2, 3], vsize=[1, 1], adjwgt=[
-    4, 4,
-  ])
+  let graph = @metis.CsrGraph(
+    2,
+    [0, 1, 2],
+    [1, 0],
+    ncon=1,
+    vwgt=[2, 3],
+    vsize=[1, 1],
+    adjwgt=[4, 4],
+  )
   inspect(graph.nvtxs(), content="2")
   inspect(graph.ncon(), content="1")
   inspect(graph.xadj().length(), content="3")

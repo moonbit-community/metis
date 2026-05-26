@@ -48,6 +48,8 @@ pub(all) enum CoarseningScheme {
 pub struct CsrGraph {
   // private fields
 }
+#as_free_fn
+pub fn CsrGraph::CsrGraph(Int, FixedArray[Int], FixedArray[Int], ncon? : Int, vwgt? : FixedArray[Int], vsize? : FixedArray[Int], adjwgt? : FixedArray[Int]) -> Self raise MetisError
 pub fn CsrGraph::adjacency_weights(Self) -> FixedArray[Int]?
 pub fn CsrGraph::adjncy(Self) -> FixedArray[Int]
 pub fn CsrGraph::ncon(Self) -> Int
