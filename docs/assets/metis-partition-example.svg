@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">MoonBit METIS graph partitioning example</title>
+  <desc id="desc">A static diagram showing a MoonBit CSR graph passed to part_graph_kway and split into two partitions with one crossing edge.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2878d7" stop-opacity="0.07"/>
+      <stop offset="0.48" stop-color="#24955b" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#ef604b" stop-opacity="0.05"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#172328" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .title { font: 900 54px Arial, sans-serif; fill: #172328; }
+      .subtitle { font: 700 22px Arial, sans-serif; fill: #667277; }
+      .label { font: 800 18px Arial, sans-serif; fill: #172328; }
+      .small { font: 700 15px Arial, sans-serif; fill: #667277; }
+      .mono { font: 700 16px Menlo, Consolas, monospace; fill: #d9e6e1; }
+      .mono-hot { font: 800 16px Menlo, Consolas, monospace; fill: #ffe08a; }
+      .metric-label { font: 900 15px Arial, sans-serif; fill: #667277; }
+      .metric-value { font: 900 24px Arial, sans-serif; fill: #172328; }
+      .node-label { font: 900 34px Arial, sans-serif; fill: #fff; text-anchor: middle; dominant-baseline: central; }
+      .partition-label { font: 900 20px Arial, sans-serif; }
+    </style>
+  </defs>
+  <rect width="1280" height="720" fill="#f4f7f2"/>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <path d="M70 42H1210" stroke="#dfe8dc" stroke-width="7" stroke-linecap="round"/>
+  <path d="M70 42H760" stroke="#ef604b" stroke-width="7" stroke-linecap="round"/>
+
+  <text x="70" y="112" class="title">METIS from MoonBit</text>
+  <text x="72" y="148" class="subtitle">Build a graph, call the native partitioner, use the partition map.</text>
+
+  <g filter="url(#shadow)">
+    <rect x="64" y="204" width="328" height="314" rx="8" fill="#fffdf7" stroke="#d5ddcf" stroke-width="2"/>
+    <text x="88" y="238" font-family="Arial, sans-serif" font-size="18" font-weight="900" fill="#2878d7">1. MoonBit input</text>
+    <rect x="88" y="260" width="280" height="166" rx="8" fill="#172328"/>
+    <text x="108" y="290" class="mono">let graph =</text>
+    <text x="108" y="322" class="mono">  CsrGraph::new(...)</text>
+    <text x="108" y="354" class="mono">let result =</text>
+    <text x="108" y="386" class="mono-hot">  part_graph_kway(graph, 2)</text>
+    <text x="108" y="414" class="mono">result.part</text>
+    <rect x="88" y="446" width="56" height="31" rx="15" fill="#f7fbf8" stroke="#d5ddcf"/>
+    <text x="116" y="467" class="small" text-anchor="middle">xadj</text>
+    <rect x="154" y="446" width="72" height="31" rx="15" fill="#f7fbf8" stroke="#d5ddcf"/>
+    <text x="190" y="467" class="small" text-anchor="middle">adjncy</text>
+    <rect x="236" y="446" width="132" height="31" rx="15" fill="#f7fbf8" stroke="#d5ddcf"/>
+    <text x="302" y="467" class="small" text-anchor="middle">zero-based</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="444" y="204" width="498" height="314" rx="8" fill="#fffdf7" stroke="#d5ddcf" stroke-width="2"/>
+    <text x="468" y="238" font-family="Arial, sans-serif" font-size="18" font-weight="900" fill="#24955b">2. METIS partitions the graph</text>
+    <rect x="486" y="274" width="186" height="168" rx="10" fill="#e4f3ea"/>
+    <rect x="714" y="274" width="186" height="168" rx="10" fill="#e6effb"/>
+
+    <line x1="562" y1="304" x2="506" y2="384" stroke="#7c8b8c" stroke-width="6" stroke-linecap="round"/>
+    <line x1="562" y1="304" x2="626" y2="390" stroke="#7c8b8c" stroke-width="6" stroke-linecap="round"/>
+    <line x1="506" y1="384" x2="626" y2="390" stroke="#7c8b8c" stroke-width="6" stroke-linecap="round"/>
+    <line x1="760" y1="390" x2="880" y2="384" stroke="#7c8b8c" stroke-width="6" stroke-linecap="round"/>
+    <line x1="760" y1="390" x2="824" y2="304" stroke="#7c8b8c" stroke-width="6" stroke-linecap="round"/>
+    <line x1="824" y1="304" x2="880" y2="384" stroke="#7c8b8c" stroke-width="6" stroke-linecap="round"/>
+
+    <line x1="626" y1="390" x2="684" y2="390" stroke="#ef604b" stroke-width="9" stroke-linecap="round"/>
+    <line x1="702" y1="390" x2="760" y2="390" stroke="#ef604b" stroke-width="9" stroke-linecap="round"/>
+    <text x="690" y="389" font-family="Arial, sans-serif" font-size="58" font-weight="900" fill="#ef604b" text-anchor="middle">/</text>
+    <text x="694" y="458" font-family="Arial, sans-serif" font-size="20" font-weight="900" fill="#ef604b" text-anchor="middle">1 crossing edge</text>
+
+    <g>
+      <circle cx="562" cy="304" r="36" fill="#24955b" stroke="#fff" stroke-width="5"/>
+      <text x="562" y="304" class="node-label">0</text>
+      <circle cx="506" cy="384" r="36" fill="#24955b" stroke="#fff" stroke-width="5"/>
+      <text x="506" y="384" class="node-label">1</text>
+      <circle cx="626" cy="390" r="36" fill="#24955b" stroke="#fff" stroke-width="5"/>
+      <text x="626" y="390" class="node-label">2</text>
+      <circle cx="760" cy="390" r="36" fill="#2878d7" stroke="#fff" stroke-width="5"/>
+      <text x="760" y="390" class="node-label">3</text>
+      <circle cx="880" cy="384" r="36" fill="#2878d7" stroke="#fff" stroke-width="5"/>
+      <text x="880" y="384" class="node-label">4</text>
+      <circle cx="824" cy="304" r="36" fill="#2878d7" stroke="#fff" stroke-width="5"/>
+      <text x="824" y="304" class="node-label">5</text>
+    </g>
+
+    <text x="556" y="486" class="partition-label" fill="#24955b">part 0</text>
+    <text x="788" y="486" class="partition-label" fill="#2878d7">part 1</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="994" y="204" width="222" height="314" rx="8" fill="#fffdf7" stroke="#d5ddcf" stroke-width="2"/>
+    <text x="1018" y="238" font-family="Arial, sans-serif" font-size="18" font-weight="900" fill="#c99020">3. Result map</text>
+    <text x="1018" y="274" class="label">part[i] gives</text>
+    <text x="1018" y="300" class="label">vertex i's block</text>
+
+    <g transform="translate(1018 330)">
+      <text x="14" y="0" class="small" text-anchor="middle">v0</text>
+      <text x="46" y="0" class="small" text-anchor="middle">v1</text>
+      <text x="78" y="0" class="small" text-anchor="middle">v2</text>
+      <text x="110" y="0" class="small" text-anchor="middle">v3</text>
+      <text x="142" y="0" class="small" text-anchor="middle">v4</text>
+      <text x="174" y="0" class="small" text-anchor="middle">v5</text>
+      <rect x="0" y="12" width="28" height="36" rx="6" fill="#24955b"/>
+      <rect x="32" y="12" width="28" height="36" rx="6" fill="#24955b"/>
+      <rect x="64" y="12" width="28" height="36" rx="6" fill="#24955b"/>
+      <rect x="96" y="12" width="28" height="36" rx="6" fill="#2878d7"/>
+      <rect x="128" y="12" width="28" height="36" rx="6" fill="#2878d7"/>
+      <rect x="160" y="12" width="28" height="36" rx="6" fill="#2878d7"/>
+      <text x="14" y="36" font-family="Arial, sans-serif" font-size="20" font-weight="900" fill="#fff" text-anchor="middle">0</text>
+      <text x="46" y="36" font-family="Arial, sans-serif" font-size="20" font-weight="900" fill="#fff" text-anchor="middle">0</text>
+      <text x="78" y="36" font-family="Arial, sans-serif" font-size="20" font-weight="900" fill="#fff" text-anchor="middle">0</text>
+      <text x="110" y="36" font-family="Arial, sans-serif" font-size="20" font-weight="900" fill="#fff" text-anchor="middle">1</text>
+      <text x="142" y="36" font-family="Arial, sans-serif" font-size="20" font-weight="900" fill="#fff" text-anchor="middle">1</text>
+      <text x="174" y="36" font-family="Arial, sans-serif" font-size="20" font-weight="900" fill="#fff" text-anchor="middle">1</text>
+    </g>
+
+    <line x1="1018" y1="418" x2="1192" y2="418" stroke="#d5ddcf" stroke-width="2"/>
+    <text x="1018" y="452" class="metric-label">OBJVAL</text>
+    <text x="1018" y="482" class="metric-value">1 cut edge</text>
+  </g>
+
+  <g>
+    <rect x="64" y="586" width="1152" height="72" rx="8" fill="#fffdf7" stroke="#d5ddcf" stroke-width="2"/>
+    <rect x="64" y="586" width="10" height="72" rx="5" fill="#ef604b"/>
+    <text x="96" y="630" font-family="Arial, sans-serif" font-size="22" font-weight="900" fill="#172328">What this binding gives you:</text>
+    <text x="458" y="617" font-family="Arial, sans-serif" font-size="19" font-weight="800" fill="#172328">MoonBit-safe shapes and ownership around METIS' native graph, mesh, ordering,</text>
+    <text x="458" y="643" font-family="Arial, sans-serif" font-size="19" font-weight="800" fill="#172328">and separator APIs.</text>
+  </g>
+</svg>

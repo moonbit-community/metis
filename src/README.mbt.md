@@ -2,9 +2,7 @@
 
 MoonBit bindings to [METIS](https://github.com/KarypisLab/METIS).
 
-![15-second animated overview of MoonBit METIS graph partitioning](docs/assets/metis-overview-preview.gif)
-
-[Watch the MP4 version](docs/assets/metis-overview.mp4)
+![Static overview of MoonBit METIS graph partitioning](docs/assets/metis-partition-example.svg)
 
 This package vendors the upstream METIS and GKlib C sources into MoonBit native
 stubs. The ABI uses 32-bit `idx_t` and 32-bit `real_t`, matching the standard
@@ -103,16 +101,3 @@ test "convert and partition a mesh" {
 The public API validates CSR and mesh shapes before entering C. METIS-allocated
 arrays from mesh conversion are copied into MoonBit-owned arrays and freed inside
 the binding.
-
-## Remotion Overview Video
-
-The 15-second Remotion explainer lives in `docs/remotion/metis-overview`. It
-walks through a complete MoonBit CSR graph example, sends it to
-`part_graph_kway`, and shows the partition result.
-
-```bash
-cd docs/remotion/metis-overview
-npm install
-npm run render
-npm run preview:gif
-```
