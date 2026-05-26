@@ -2,9 +2,9 @@
 
 MoonBit bindings to [METIS](https://github.com/KarypisLab/METIS).
 
-![Animated overview of MoonBit METIS graph partitioning](metis-partition-animation.svg)
+![15-second animated overview of MoonBit METIS graph partitioning](docs/assets/metis-overview-preview.gif)
 
-[![15-second Remotion overview of MoonBit METIS graph partitioning](docs/assets/metis-overview-poster.png)](docs/assets/metis-overview.mp4)
+[Watch the MP4 version](docs/assets/metis-overview.mp4)
 
 This package vendors the upstream METIS and GKlib C sources into MoonBit native
 stubs. The ABI uses 32-bit `idx_t` and 32-bit `real_t`, matching the standard
@@ -114,4 +114,5 @@ walks through a complete MoonBit CSR graph example, sends it to
 cd docs/remotion/metis-overview
 npm install
 npm run render
+npm run preview:gif
 ```

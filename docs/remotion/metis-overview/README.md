@@ -30,4 +30,10 @@ Render the MP4:
 npm run render
 ```
 
+Generate the README GIF preview after rendering the MP4:
+
+```bash
+npm run preview:gif
+```
+
 The committed video asset is copied to `../../assets/metis-overview.mp4`.
