@@ -2,6 +2,8 @@
 
 MoonBit bindings to [METIS](https://github.com/KarypisLab/METIS).
 
+![Animated overview of MoonBit METIS graph partitioning](metis-partition-animation.svg)
+
 This package vendors the upstream METIS and GKlib C sources into MoonBit native
 stubs. The ABI uses 32-bit `idx_t` and 32-bit `real_t`, matching the standard
 METIS build.
