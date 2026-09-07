@@ -11,20 +11,20 @@ fn sample_mesh() -> Mesh raise MetisError {
 ///|
 fn assert_partition(part : FixedArray[Int], nparts : Int) -> Unit {
   for value in part {
-    guard value >= 0 && value < nparts
+    guard! value >= 0 && value < nparts
   }
 }
 
 ///|
 fn assert_permutation(perm : FixedArray[Int], iperm : FixedArray[Int]) -> Unit {
-  guard perm.length() == iperm.length()
+  guard! perm.length() == iperm.length()
   let seen = FixedArray::make(perm.length(), false)
   for i in 0..<perm.length() {
     let p = perm[i]
-    guard p >= 0 && p < perm.length()
-    guard !seen[p]
+    guard! p >= 0 && p < perm.length()
+    guard! !seen[p]
     seen[p] = true
-    guard iperm[p] == i
+    guard! iperm[p] == i
   }
 }
 
@@ -32,24 +32,24 @@ fn assert_permutation(perm : FixedArray[Int], iperm : FixedArray[Int]) -> Unit {
 fn assert_is_permutation(perm : FixedArray[Int]) -> Unit {
   let seen = FixedArray::make(perm.length(), false)
   for value in perm {
-    guard value >= 0 && value < perm.length()
-    guard !seen[value]
+    guard! value >= 0 && value < perm.length()
+    guard! !seen[value]
     seen[value] = true
   }
 }
 
 ///|
 fn fail() -> Unit {
-  guard false
+  guard! false
 }
 
 ///|
 test "version" {
   let (major, minor, subminor) = version()
-  guard major == 5
-  guard minor == 2
-  guard subminor == 1
-  guard native_option_count() == 40
+  guard! major == 5
+  guard! minor == 2
+  guard! subminor == 1
+  guard! native_option_count() == 40
 }
 
 ///|
@@ -58,7 +58,7 @@ test "part graph kway" {
   let result = part_graph_kway(graph, 2)
   inspect(result.part.length(), content="4")
   assert_partition(result.part, 2)
-  guard result.objval >= 0
+  guard! result.objval >= 0
 }
 
 ///|
@@ -67,7 +67,7 @@ test "part graph recursive" {
   let result = part_graph_recursive(graph, 2)
   inspect(result.part.length(), content="4")
   assert_partition(result.part, 2)
-  guard result.objval >= 0
+  guard! result.objval >= 0
 }
 
 ///|
@@ -87,25 +87,25 @@ test "graph exposes all constructor inputs" {
   inspect(graph.adjncy().length(), content="2")
   match graph.vertex_weights() {
     Some(vwgt) => {
-      guard vwgt.length() == 2
-      guard vwgt[0] == 2
-      guard vwgt[1] == 3
+      guard! vwgt.length() == 2
+      guard! vwgt[0] == 2
+      guard! vwgt[1] == 3
     }
     None => fail()
   }
   match graph.vertex_sizes() {
     Some(vsize) => {
-      guard vsize.length() == 2
-      guard vsize[0] == 1
-      guard vsize[1] == 1
+      guard! vsize.length() == 2
+      guard! vsize[0] == 1
+      guard! vsize[1] == 1
     }
     None => fail()
   }
   match graph.adjacency_weights() {
     Some(adjwgt) => {
-      guard adjwgt.length() == 2
-      guard adjwgt[0] == 4
-      guard adjwgt[1] == 4
+      guard! adjwgt.length() == 2
+      guard! adjwgt[0] == 4
+      guard! adjwgt[1] == 4
     }
     None => fail()
   }
@@ -136,13 +136,13 @@ test "mesh to dual" {
   let graph = mesh_to_dual(mesh, ncommon=2)
   let xadj = graph.xadj()
   let adjncy = graph.adjncy()
-  guard xadj.length() == 3
-  guard xadj[0] == 0
-  guard xadj[1] == 1
-  guard xadj[2] == 2
-  guard adjncy.length() == 2
-  guard adjncy[0] == 1
-  guard adjncy[1] == 0
+  guard! xadj.length() == 3
+  guard! xadj[0] == 0
+  guard! xadj[1] == 1
+  guard! xadj[2] == 2
+  guard! adjncy.length() == 2
+  guard! adjncy[0] == 1
+  guard! adjncy[1] == 0
 }
 
 ///|
@@ -150,7 +150,7 @@ test "mesh to nodal" {
   let mesh = sample_mesh()
   let graph = mesh_to_nodal(mesh)
   inspect(graph.nvtxs(), content="4")
-  guard graph.xadj().length() == 5
+  guard! graph.xadj().length() == 5
 }
 
 ///|
@@ -221,7 +221,7 @@ test "vertex separator" {
   let graph = sample_graph()
   let result = compute_vertex_separator(graph)
   inspect(result.part.length(), content="4")
-  guard result.sepsize >= 0
+  guard! result.sepsize >= 0
 }
 
 ///|
@@ -233,7 +233,7 @@ test "node refine accepts weighted graph inputs" {
   let refined = node_refine(graph, vwgt, separator.part, hmarker, 1.05)
   inspect(refined.length(), content="4")
   for value in refined {
-    guard value >= 0 && value <= 2
+    guard! value >= 0 && value <= 2
   }
 }
 
@@ -258,7 +258,7 @@ test "typed debug flags can be configured" {
 test "invalid csr is rejected before ffi" {
   try {
     ignore(CsrGraph::new(2, [0, 3], [1]))
-    guard false
+    guard! false
   } catch {
     InvalidGraph => ()
     _ => fail()

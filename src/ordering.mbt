@@ -30,7 +30,7 @@ pub fn node_nd(
     iperm,
   )
   raise_status(status)
-  { perm, iperm }
+  { perm, iperm, }
 }
 
 ///|
@@ -59,7 +59,7 @@ pub fn node_ndp(
     sizes,
   )
   raise_status(status)
-  { perm, iperm, sizes }
+  { perm, iperm, sizes, }
 }
 
 ///|

@@ -38,6 +38,10 @@ pub(all) suberror MetisError {
   InvalidOptions
   UnsupportedIndexWidth
 } derive(Eq, Hash)
+pub fn MetisError::equal(Self, Self) -> Bool
+pub fn MetisError::hash(Self) -> Int
+pub fn MetisError::hash_combine(Self, Hasher) -> Unit
+pub fn MetisError::not_equal(Self, Self) -> Bool
 
 // Types and methods
 pub(all) enum CoarseningScheme {
@@ -162,4 +166,3 @@ pub(all) struct VertexSeparatorResult {
 // Type aliases
 
 // Traits
-

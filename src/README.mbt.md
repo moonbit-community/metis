@@ -49,7 +49,7 @@ test "partition a four-cycle graph" {
   let result = part_graph_kway(graph, 2)
   inspect(result.part.length(), content="4")
   for value in result.part {
-    guard value >= 0 && value < 2
+    guard! value >= 0 && value < 2
   }
 }
 ```

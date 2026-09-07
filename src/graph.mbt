@@ -32,7 +32,7 @@ fn make_csr_graph(
   vsize? : FixedArray[Int],
   adjwgt? : FixedArray[Int],
 ) -> CsrGraph raise MetisError {
-  let graph = { nvtxs, ncon, xadj, adjncy, vwgt, vsize, adjwgt }
+  let graph = { nvtxs, ncon, xadj, adjncy, vwgt, vsize, adjwgt, }
   graph.validate()
   graph
 }

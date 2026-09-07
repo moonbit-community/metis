@@ -32,7 +32,7 @@ pub fn part_graph_kway(
     part,
   )
   raise_status(status)
-  { objval: objval.val, part }
+  { objval: objval.val, part, }
 }
 
 ///|
@@ -63,7 +63,7 @@ pub fn part_graph_recursive(
     part,
   )
   raise_status(status)
-  { objval: objval.val, part }
+  { objval: objval.val, part, }
 }
 
 ///|

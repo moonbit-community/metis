@@ -19,3 +19,9 @@ fn raise_status(status : Int) -> Unit raise MetisError {
     _ => raise Error
   }
 }
+
+///|
+pub extend MetisError with Eq::{not_equal, equal}
+
+///|
+pub extend MetisError with Hash::{hash, hash_combine}

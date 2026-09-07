@@ -1,6 +1,6 @@
 name = "Milky2018/metis"
 
-version = "0.1.1"
+version = "0.1.2"
 
 readme = "README.md"
 
@@ -16,6 +16,4 @@ preferred_target = "native"
 
 supported_targets = "native+llvm"
 
-options(
-  source: "src",
-)
+source = "src"

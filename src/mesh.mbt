@@ -20,7 +20,7 @@ pub fn Mesh::new(
   eptr : FixedArray[Int],
   eind : FixedArray[Int],
 ) -> Mesh raise MetisError {
-  let mesh = { ne, nn, eptr, eind }
+  let mesh = { ne, nn, eptr, eind, }
   mesh.validate()
   mesh
 }
@@ -172,7 +172,7 @@ pub fn part_mesh_nodal(
     npart,
   )
   raise_status(status)
-  { objval: objval.val, epart, npart }
+  { objval: objval.val, epart, npart, }
 }
 
 ///|
@@ -211,5 +211,5 @@ pub fn part_mesh_dual(
     npart,
   )
   raise_status(status)
-  { objval: objval.val, epart, npart }
+  { objval: objval.val, epart, npart, }
 }

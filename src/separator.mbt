@@ -23,5 +23,5 @@ pub fn compute_vertex_separator(
     part,
   )
   raise_status(status)
-  { sepsize: sepsize.val, part }
+  { sepsize: sepsize.val, part, }
 }
