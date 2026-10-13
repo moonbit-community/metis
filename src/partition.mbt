@@ -1,13 +1,13 @@
 ///|
 pub(all) struct PartitionResult {
-  objval : Int
-  part : FixedArray[Int]
+  objval : Int32
+  part : FixedArray[Int32]
 }
 
 ///|
 pub fn part_graph_kway(
   graph : CsrGraph,
-  nparts : Int,
+  nparts : Int32,
   options? : Options,
   target_partition_weights? : FixedArray[Float],
   imbalance? : FixedArray[Float],
@@ -38,7 +38,7 @@ pub fn part_graph_kway(
 ///|
 pub fn part_graph_recursive(
   graph : CsrGraph,
-  nparts : Int,
+  nparts : Int32,
   options? : Options,
   target_partition_weights? : FixedArray[Float],
   imbalance? : FixedArray[Float],
@@ -69,8 +69,8 @@ pub fn part_graph_recursive(
 ///|
 pub fn cache_friendly_reordering(
   graph : CsrGraph,
-  part : FixedArray[Int],
-) -> FixedArray[Int] raise MetisError {
+  part : FixedArray[Int32],
+) -> FixedArray[Int32] raise MetisError {
   graph.validate()
   if part.length() != graph.nvtxs {
     raise InvalidOptions

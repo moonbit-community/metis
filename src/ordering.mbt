@@ -1,14 +1,14 @@
 ///|
 pub(all) struct OrderingResult {
-  perm : FixedArray[Int]
-  iperm : FixedArray[Int]
+  perm : FixedArray[Int32]
+  iperm : FixedArray[Int32]
 }
 
 ///|
 pub(all) struct ParallelOrderingResult {
-  perm : FixedArray[Int]
-  iperm : FixedArray[Int]
-  sizes : FixedArray[Int]
+  perm : FixedArray[Int32]
+  iperm : FixedArray[Int32]
+  sizes : FixedArray[Int32]
 }
 
 ///|
@@ -36,7 +36,7 @@ pub fn node_nd(
 ///|
 pub fn node_ndp(
   graph : CsrGraph,
-  npes : Int,
+  npes : Int32,
   options? : Options,
 ) -> ParallelOrderingResult raise MetisError {
   graph.validate()
@@ -65,11 +65,11 @@ pub fn node_ndp(
 ///|
 pub fn node_refine(
   graph : CsrGraph,
-  vwgt : FixedArray[Int],
-  where_part : FixedArray[Int],
-  hmarker : FixedArray[Int],
+  vwgt : FixedArray[Int32],
+  where_part : FixedArray[Int32],
+  hmarker : FixedArray[Int32],
   ubfactor : Float,
-) -> FixedArray[Int] raise MetisError {
+) -> FixedArray[Int32] raise MetisError {
   graph.validate()
   if vwgt.length() != graph.nvtxs ||
     where_part.length() != graph.nvtxs ||

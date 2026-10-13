@@ -1,6 +1,6 @@
 ///|
 pub struct Options {
-  priv values : FixedArray[Int]
+  priv values : FixedArray[Int32]
 }
 
 ///|
@@ -10,7 +10,7 @@ pub(all) enum PartitioningScheme {
 }
 
 ///|
-fn PartitioningScheme::to_int(self : PartitioningScheme) -> Int {
+fn PartitioningScheme::to_int(self : PartitioningScheme) -> Int32 {
   match self {
     RecursiveBisection => 0
     Kway => 1
@@ -25,7 +25,7 @@ pub(all) enum ObjectiveType {
 }
 
 ///|
-fn ObjectiveType::to_int(self : ObjectiveType) -> Int {
+fn ObjectiveType::to_int(self : ObjectiveType) -> Int32 {
   match self {
     Cut => 0
     Volume => 1
@@ -40,7 +40,7 @@ pub(all) enum CoarseningScheme {
 }
 
 ///|
-fn CoarseningScheme::to_int(self : CoarseningScheme) -> Int {
+fn CoarseningScheme::to_int(self : CoarseningScheme) -> Int32 {
   match self {
     RandomMatching => 0
     SortedHeavyEdgeMatching => 1
@@ -57,7 +57,7 @@ pub(all) enum InitialPartitioningScheme {
 }
 
 ///|
-fn InitialPartitioningScheme::to_int(self : InitialPartitioningScheme) -> Int {
+fn InitialPartitioningScheme::to_int(self : InitialPartitioningScheme) -> Int32 {
   match self {
     Grow => 0
     Random => 1
@@ -76,7 +76,7 @@ pub(all) enum RefinementScheme {
 }
 
 ///|
-fn RefinementScheme::to_int(self : RefinementScheme) -> Int {
+fn RefinementScheme::to_int(self : RefinementScheme) -> Int32 {
   match self {
     Fm => 0
     Greedy => 1
@@ -100,7 +100,7 @@ pub(all) enum DebugFlag {
 }
 
 ///|
-fn DebugFlag::to_int(self : DebugFlag) -> Int {
+fn DebugFlag::to_int(self : DebugFlag) -> Int32 {
   match self {
     Info => 1
     Time => 2
@@ -122,7 +122,7 @@ pub fn Options::default() -> Options {
 }
 
 ///|
-fn Options::raw(self : Options) -> FixedArray[Int] {
+fn Options::raw(self : Options) -> FixedArray[Int32] {
   self.values
 }
 
@@ -180,7 +180,7 @@ pub fn Options::set_refinement_scheme(
 }
 
 ///|
-pub fn Options::set_debug_level(self : Options, level : Int) -> Options {
+pub fn Options::set_debug_level(self : Options, level : Int32) -> Options {
   self.values[option_dbglvl] = level
   self
 }
@@ -198,13 +198,13 @@ pub fn Options::set_debug_flags(
 }
 
 ///|
-pub fn Options::set_seed(self : Options, seed : Int) -> Options {
+pub fn Options::set_seed(self : Options, seed : Int32) -> Options {
   self.values[option_seed] = seed
   self
 }
 
 ///|
-pub fn Options::set_number_of_cuts(self : Options, ncuts : Int) -> Options {
+pub fn Options::set_number_of_cuts(self : Options, ncuts : Int32) -> Options {
   self.values[option_ncuts] = ncuts
   self
 }
@@ -212,7 +212,7 @@ pub fn Options::set_number_of_cuts(self : Options, ncuts : Int) -> Options {
 ///|
 pub fn Options::set_number_of_iterations(
   self : Options,
-  niter : Int,
+  niter : Int32,
 ) -> Options {
   self.values[option_niter] = niter
   self
@@ -221,7 +221,7 @@ pub fn Options::set_number_of_iterations(
 ///|
 pub fn Options::set_number_of_initial_partitions(
   self : Options,
-  niparts : Int,
+  niparts : Int32,
 ) -> Options {
   self.values[option_niparts] = niparts
   self
@@ -258,7 +258,7 @@ pub fn Options::set_connected_component_ordering(
 }
 
 ///|
-pub fn Options::set_pruning_factor(self : Options, factor : Int) -> Options {
+pub fn Options::set_pruning_factor(self : Options, factor : Int32) -> Options {
   self.values[option_pfactor] = factor
   self
 }
@@ -266,14 +266,14 @@ pub fn Options::set_pruning_factor(self : Options, factor : Int) -> Options {
 ///|
 pub fn Options::set_number_of_separators(
   self : Options,
-  nseps : Int,
+  nseps : Int32,
 ) -> Options {
   self.values[option_nseps] = nseps
   self
 }
 
 ///|
-pub fn Options::set_imbalance_factor(self : Options, factor : Int) -> Options {
+pub fn Options::set_imbalance_factor(self : Options, factor : Int32) -> Options {
   self.values[option_ufactor] = factor
   self
 }

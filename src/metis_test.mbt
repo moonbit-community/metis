@@ -1,22 +1,25 @@
 ///|
-fn sample_graph() -> CsrGraph raise MetisError {
-  @metis.CsrGraph(4, [0, 2, 4, 6, 8], [1, 3, 0, 2, 1, 3, 0, 2])
+fn sample_graph() -> @metis.CsrGraph raise @metis.MetisError {
+  CsrGraph(4, [0, 2, 4, 6, 8], [1, 3, 0, 2, 1, 3, 0, 2])
 }
 
 ///|
-fn sample_mesh() -> Mesh raise MetisError {
-  Mesh::new(2, 4, [0, 3, 6], [0, 1, 2, 1, 2, 3])
+fn sample_mesh() -> @metis.Mesh raise @metis.MetisError {
+  @metis.Mesh::new(2, 4, [0, 3, 6], [0, 1, 2, 1, 2, 3])
 }
 
 ///|
-fn assert_partition(part : FixedArray[Int], nparts : Int) -> Unit {
+fn assert_partition(part : FixedArray[Int32], nparts : Int32) -> Unit {
   for value in part {
     guard! value >= 0 && value < nparts
   }
 }
 
 ///|
-fn assert_permutation(perm : FixedArray[Int], iperm : FixedArray[Int]) -> Unit {
+fn assert_permutation(
+  perm : FixedArray[Int32],
+  iperm : FixedArray[Int32],
+) -> Unit {
   guard! perm.length() == iperm.length()
   let seen = FixedArray::make(perm.length(), false)
   for i in 0..<perm.length() {
@@ -29,7 +32,7 @@ fn assert_permutation(perm : FixedArray[Int], iperm : FixedArray[Int]) -> Unit {
 }
 
 ///|
-fn assert_is_permutation(perm : FixedArray[Int]) -> Unit {
+fn assert_is_permutation(perm : FixedArray[Int32]) -> Unit {
   let seen = FixedArray::make(perm.length(), false)
   for value in perm {
     guard! value >= 0 && value < perm.length()
@@ -45,17 +48,17 @@ fn fail() -> Unit {
 
 ///|
 test "version" {
-  let (major, minor, subminor) = version()
+  let (major, minor, subminor) = @metis.version()
   guard! major == 5
   guard! minor == 2
   guard! subminor == 1
-  guard! native_option_count() == 40
+  guard! @metis.native_option_count() == 40
 }
 
 ///|
 test "part graph kway" {
   let graph = sample_graph()
-  let result = part_graph_kway(graph, 2)
+  let result = @metis.part_graph_kway(graph, 2)
   inspect(result.part.length(), content="4")
   assert_partition(result.part, 2)
   guard! result.objval >= 0
@@ -64,7 +67,7 @@ test "part graph kway" {
 ///|
 test "part graph recursive" {
   let graph = sample_graph()
-  let result = part_graph_recursive(graph, 2)
+  let result = @metis.part_graph_recursive(graph, 2)
   inspect(result.part.length(), content="4")
   assert_partition(result.part, 2)
   guard! result.objval >= 0
@@ -114,14 +117,14 @@ test "graph exposes all constructor inputs" {
 ///|
 test "node ordering" {
   let graph = sample_graph()
-  let result = node_nd(graph)
+  let result = @metis.node_nd(graph)
   assert_permutation(result.perm, result.iperm)
 }
 
 ///|
 test "parallel node ordering allocates separator sizes" {
   let graph = sample_graph()
-  let result = node_ndp(graph, 2)
+  let result = @metis.node_ndp(graph, 2)
   assert_permutation(result.perm, result.iperm)
   inspect(result.sizes.length(), content="3")
 }
@@ -133,7 +136,7 @@ test "mesh to dual" {
   inspect(mesh.nn(), content="4")
   inspect(mesh.eptr().length(), content="3")
   inspect(mesh.eind().length(), content="6")
-  let graph = mesh_to_dual(mesh, ncommon=2)
+  let graph = @metis.mesh_to_dual(mesh, ncommon=2)
   let xadj = graph.xadj()
   let adjncy = graph.adjncy()
   guard! xadj.length() == 3
@@ -148,7 +151,7 @@ test "mesh to dual" {
 ///|
 test "mesh to nodal" {
   let mesh = sample_mesh()
-  let graph = mesh_to_nodal(mesh)
+  let graph = @metis.mesh_to_nodal(mesh)
   inspect(graph.nvtxs(), content="4")
   guard! graph.xadj().length() == 5
 }
@@ -156,7 +159,7 @@ test "mesh to nodal" {
 ///|
 test "part mesh dual" {
   let mesh = sample_mesh()
-  let result = part_mesh_dual(mesh, 2, ncommon=2)
+  let result = @metis.part_mesh_dual(mesh, 2, ncommon=2)
   inspect(result.epart.length(), content="2")
   inspect(result.npart.length(), content="4")
   assert_partition(result.epart, 2)
@@ -166,8 +169,8 @@ test "part mesh dual" {
 ///|
 test "part mesh nodal" {
   let mesh = sample_mesh()
-  let options = Options::default().set_partitioning_scheme(Kway)
-  let result = part_mesh_nodal(mesh, 2, options~)
+  let options = @metis.Options::default().set_partitioning_scheme(Kway)
+  let result = @metis.part_mesh_nodal(mesh, 2, options~)
   inspect(result.epart.length(), content="2")
   inspect(result.npart.length(), content="4")
   assert_partition(result.epart, 2)
@@ -177,14 +180,14 @@ test "part mesh nodal" {
 ///|
 test "mesh partition weights are scoped by graph kind" {
   let mesh = sample_mesh()
-  let nodal = part_mesh_nodal(
+  let nodal = @metis.part_mesh_nodal(
     mesh,
     2,
     node_weights=FixedArray::make(4, 1),
     node_sizes=FixedArray::make(4, 1),
   )
   assert_partition(nodal.npart, 2)
-  let dual = part_mesh_dual(
+  let dual = @metis.part_mesh_dual(
     mesh,
     2,
     ncommon=2,
@@ -193,14 +196,16 @@ test "mesh partition weights are scoped by graph kind" {
   )
   assert_partition(dual.epart, 2)
   try {
-    ignore(part_mesh_nodal(mesh, 2, node_weights=FixedArray::make(2, 1)))
+    ignore(@metis.part_mesh_nodal(mesh, 2, node_weights=FixedArray::make(2, 1)))
     fail()
   } catch {
     InvalidOptions => ()
     _ => fail()
   }
   try {
-    ignore(part_mesh_dual(mesh, 2, element_weights=FixedArray::make(4, 1)))
+    ignore(
+      @metis.part_mesh_dual(mesh, 2, element_weights=FixedArray::make(4, 1)),
+    )
     fail()
   } catch {
     InvalidOptions => ()
@@ -211,15 +216,15 @@ test "mesh partition weights are scoped by graph kind" {
 ///|
 test "cache friendly reordering" {
   let graph = sample_graph()
-  let result = part_graph_kway(graph, 2)
-  let old2new = cache_friendly_reordering(graph, result.part)
+  let result = @metis.part_graph_kway(graph, 2)
+  let old2new = @metis.cache_friendly_reordering(graph, result.part)
   assert_is_permutation(old2new)
 }
 
 ///|
 test "vertex separator" {
   let graph = sample_graph()
-  let result = compute_vertex_separator(graph)
+  let result = @metis.compute_vertex_separator(graph)
   inspect(result.part.length(), content="4")
   guard! result.sepsize >= 0
 }
@@ -227,10 +232,10 @@ test "vertex separator" {
 ///|
 test "node refine accepts weighted graph inputs" {
   let graph = sample_graph()
-  let separator = compute_vertex_separator(graph)
+  let separator = @metis.compute_vertex_separator(graph)
   let vwgt = FixedArray::make(graph.nvtxs(), 1)
   let hmarker = FixedArray::make(graph.nvtxs(), -1)
-  let refined = node_refine(graph, vwgt, separator.part, hmarker, 1.05)
+  let refined = @metis.node_refine(graph, vwgt, separator.part, hmarker, 1.05)
   inspect(refined.length(), content="4")
   for value in refined {
     guard! value >= 0 && value <= 2
@@ -240,24 +245,24 @@ test "node refine accepts weighted graph inputs" {
 ///|
 test "options are accepted by metis" {
   let graph = sample_graph()
-  let options = Options::default()
+  let options = @metis.Options::default()
     .set_number_of_cuts(2)
     .set_number_of_iterations(5)
     .set_seed(7)
     .set_objective_type(Cut)
-  let result = part_graph_kway(graph, 2, options~)
+  let result = @metis.part_graph_kway(graph, 2, options~)
   assert_partition(result.part, 2)
 }
 
 ///|
 test "typed debug flags can be configured" {
-  ignore(Options::default().set_debug_flags([Info, Time, Memory]))
+  ignore(@metis.Options::default().set_debug_flags([Info, Time, Memory]))
 }
 
 ///|
 test "invalid csr is rejected before ffi" {
   try {
-    ignore(CsrGraph::new(2, [0, 3], [1]))
+    ignore(@metis.CsrGraph::new(2, [0, 3], [1]))
     guard! false
   } catch {
     InvalidGraph => ()
@@ -268,7 +273,7 @@ test "invalid csr is rejected before ffi" {
 ///|
 test "empty graph is rejected before ffi" {
   try {
-    ignore(CsrGraph::new(0, [0], []))
+    ignore(@metis.CsrGraph::new(0, [0], []))
     fail()
   } catch {
     InvalidGraph => ()
@@ -279,7 +284,7 @@ test "empty graph is rejected before ffi" {
 ///|
 test "invalid mesh is rejected before ffi" {
   try {
-    ignore(Mesh::new(1, 2, [0, 3], [0, 1]))
+    ignore(@metis.Mesh::new(1, 2, [0, 3], [0, 1]))
     fail()
   } catch {
     InvalidMesh => ()
@@ -290,7 +295,7 @@ test "invalid mesh is rejected before ffi" {
 ///|
 test "empty mesh is rejected before ffi" {
   try {
-    ignore(Mesh::new(0, 0, [0], []))
+    ignore(@metis.Mesh::new(0, 0, [0], []))
     fail()
   } catch {
     InvalidMesh => ()

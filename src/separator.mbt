@@ -1,7 +1,7 @@
 ///|
 pub(all) struct VertexSeparatorResult {
-  sepsize : Int
-  part : FixedArray[Int]
+  sepsize : Int32
+  part : FixedArray[Int32]
 }
 
 ///|

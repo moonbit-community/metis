@@ -46,7 +46,7 @@ moon test src/README.mbt.md --target native
 ///|
 test "partition a four-cycle graph" {
   let graph = @metis.CsrGraph(4, [0, 2, 4, 6, 8], [1, 3, 0, 2, 1, 3, 0, 2])
-  let result = part_graph_kway(graph, 2)
+  let result = @metis.part_graph_kway(graph, 2)
   inspect(result.part.length(), content="4")
   for value in result.part {
     guard! value >= 0 && value < 2
@@ -60,7 +60,7 @@ test "partition a four-cycle graph" {
 ///|
 test "compute a node ordering" {
   let graph = @metis.CsrGraph(4, [0, 2, 4, 6, 8], [1, 3, 0, 2, 1, 3, 0, 2])
-  let result = node_nd(graph)
+  let result = @metis.node_nd(graph)
   inspect(result.perm.length(), content="4")
   inspect(result.iperm.length(), content="4")
 }
@@ -71,13 +71,13 @@ test "compute a node ordering" {
 ```mbt check
 ///|
 test "convert and partition a mesh" {
-  let mesh = Mesh::new(2, 4, [0, 3, 6], [0, 1, 2, 1, 2, 3])
-  let dual = mesh_to_dual(mesh, ncommon=2)
+  let mesh = @metis.Mesh::new(2, 4, [0, 3, 6], [0, 1, 2, 1, 2, 3])
+  let dual = @metis.mesh_to_dual(mesh, ncommon=2)
   inspect(dual.nvtxs(), content="2")
-  let nodal = mesh_to_nodal(mesh)
+  let nodal = @metis.mesh_to_nodal(mesh)
   inspect(nodal.nvtxs(), content="4")
 
-  let nodal_partition = part_mesh_nodal(
+  let nodal_partition = @metis.part_mesh_nodal(
     mesh,
     2,
     node_weights=FixedArray::make(4, 1),
@@ -86,7 +86,7 @@ test "convert and partition a mesh" {
   inspect(nodal_partition.epart.length(), content="2")
   inspect(nodal_partition.npart.length(), content="4")
 
-  let dual_partition = part_mesh_dual(
+  let dual_partition = @metis.part_mesh_dual(
     mesh,
     2,
     ncommon=2,

@@ -1,36 +1,36 @@
 ///|
 pub struct CsrGraph {
-  priv nvtxs : Int
-  priv ncon : Int
-  priv xadj : FixedArray[Int]
-  priv adjncy : FixedArray[Int]
-  priv vwgt : FixedArray[Int]?
-  priv vsize : FixedArray[Int]?
-  priv adjwgt : FixedArray[Int]?
+  priv nvtxs : Int32
+  priv ncon : Int32
+  priv xadj : FixedArray[Int32]
+  priv adjncy : FixedArray[Int32]
+  priv vwgt : FixedArray[Int32]?
+  priv vsize : FixedArray[Int32]?
+  priv adjwgt : FixedArray[Int32]?
 }
 
 ///|
 pub fn CsrGraph::CsrGraph(
-  nvtxs : Int,
-  xadj : FixedArray[Int],
-  adjncy : FixedArray[Int],
-  ncon? : Int = 1,
-  vwgt? : FixedArray[Int],
-  vsize? : FixedArray[Int],
-  adjwgt? : FixedArray[Int],
+  nvtxs : Int32,
+  xadj : FixedArray[Int32],
+  adjncy : FixedArray[Int32],
+  ncon~ : Int32 = 1,
+  vwgt? : FixedArray[Int32],
+  vsize? : FixedArray[Int32],
+  adjwgt? : FixedArray[Int32],
 ) -> CsrGraph raise MetisError {
   make_csr_graph(nvtxs, xadj, adjncy, ncon~, vwgt?, vsize?, adjwgt?)
 }
 
 ///|
 fn make_csr_graph(
-  nvtxs : Int,
-  xadj : FixedArray[Int],
-  adjncy : FixedArray[Int],
-  ncon? : Int = 1,
-  vwgt? : FixedArray[Int],
-  vsize? : FixedArray[Int],
-  adjwgt? : FixedArray[Int],
+  nvtxs : Int32,
+  xadj : FixedArray[Int32],
+  adjncy : FixedArray[Int32],
+  ncon~ : Int32 = 1,
+  vwgt? : FixedArray[Int32],
+  vsize? : FixedArray[Int32],
+  adjwgt? : FixedArray[Int32],
 ) -> CsrGraph raise MetisError {
   let graph = { nvtxs, ncon, xadj, adjncy, vwgt, vsize, adjwgt, }
   graph.validate()
@@ -39,49 +39,49 @@ fn make_csr_graph(
 
 ///|
 pub fn CsrGraph::new(
-  nvtxs : Int,
-  xadj : FixedArray[Int],
-  adjncy : FixedArray[Int],
-  ncon? : Int = 1,
-  vwgt? : FixedArray[Int],
-  vsize? : FixedArray[Int],
-  adjwgt? : FixedArray[Int],
+  nvtxs : Int32,
+  xadj : FixedArray[Int32],
+  adjncy : FixedArray[Int32],
+  ncon~ : Int32 = 1,
+  vwgt? : FixedArray[Int32],
+  vsize? : FixedArray[Int32],
+  adjwgt? : FixedArray[Int32],
 ) -> CsrGraph raise MetisError {
   make_csr_graph(nvtxs, xadj, adjncy, ncon~, vwgt?, vsize?, adjwgt?)
 }
 
 ///|
-pub fn CsrGraph::nvtxs(self : CsrGraph) -> Int {
+pub fn CsrGraph::nvtxs(self : CsrGraph) -> Int32 {
   self.nvtxs
 }
 
 ///|
-pub fn CsrGraph::ncon(self : CsrGraph) -> Int {
+pub fn CsrGraph::ncon(self : CsrGraph) -> Int32 {
   self.ncon
 }
 
 ///|
-pub fn CsrGraph::xadj(self : CsrGraph) -> FixedArray[Int] {
+pub fn CsrGraph::xadj(self : CsrGraph) -> FixedArray[Int32] {
   self.xadj
 }
 
 ///|
-pub fn CsrGraph::adjncy(self : CsrGraph) -> FixedArray[Int] {
+pub fn CsrGraph::adjncy(self : CsrGraph) -> FixedArray[Int32] {
   self.adjncy
 }
 
 ///|
-pub fn CsrGraph::vertex_weights(self : CsrGraph) -> FixedArray[Int]? {
+pub fn CsrGraph::vertex_weights(self : CsrGraph) -> FixedArray[Int32]? {
   self.vwgt
 }
 
 ///|
-pub fn CsrGraph::vertex_sizes(self : CsrGraph) -> FixedArray[Int]? {
+pub fn CsrGraph::vertex_sizes(self : CsrGraph) -> FixedArray[Int32]? {
   self.vsize
 }
 
 ///|
-pub fn CsrGraph::adjacency_weights(self : CsrGraph) -> FixedArray[Int]? {
+pub fn CsrGraph::adjacency_weights(self : CsrGraph) -> FixedArray[Int32]? {
   self.adjwgt
 }
 
@@ -130,7 +130,7 @@ fn CsrGraph::validate(self : CsrGraph) -> Unit raise MetisError {
 }
 
 ///|
-fn int_array_or_empty(value : FixedArray[Int]?) -> FixedArray[Int] {
+fn int_array_or_empty(value : FixedArray[Int32]?) -> FixedArray[Int32] {
   match value {
     None => []
     Some(value) => value
@@ -148,7 +148,7 @@ fn float_array_or_empty(value : FixedArray[Float]?) -> FixedArray[Float] {
 ///|
 fn validate_partition_inputs(
   graph : CsrGraph,
-  nparts : Int,
+  nparts : Int32,
   target_partition_weights : FixedArray[Float]?,
   imbalance : FixedArray[Float]?,
 ) -> Unit raise MetisError {

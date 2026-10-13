@@ -10,7 +10,7 @@ pub(all) suberror MetisError {
 } derive(Eq, Hash)
 
 ///|
-fn raise_status(status : Int) -> Unit raise MetisError {
+fn raise_status(status : Int32) -> Unit raise MetisError {
   match status {
     1 => ()
     -2 => raise Input
