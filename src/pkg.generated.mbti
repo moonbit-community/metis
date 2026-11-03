@@ -2,31 +2,31 @@
 package "Milky2018/metis"
 
 // Values
-pub fn cache_friendly_reordering(CsrGraph, FixedArray[Int]) -> FixedArray[Int] raise MetisError
+pub fn cache_friendly_reordering(CsrGraph, FixedArray[Int32]) -> FixedArray[Int32] raise MetisError
 
 pub fn compute_vertex_separator(CsrGraph, options? : Options) -> VertexSeparatorResult raise MetisError
 
-pub fn mesh_to_dual(Mesh, ncommon? : Int) -> CsrGraph raise MetisError
+pub fn mesh_to_dual(Mesh, ncommon? : Int32) -> CsrGraph raise MetisError
 
 pub fn mesh_to_nodal(Mesh) -> CsrGraph raise MetisError
 
-pub fn native_option_count() -> Int
+pub fn native_option_count() -> Int32
 
 pub fn node_nd(CsrGraph, options? : Options) -> OrderingResult raise MetisError
 
-pub fn node_ndp(CsrGraph, Int, options? : Options) -> ParallelOrderingResult raise MetisError
+pub fn node_ndp(CsrGraph, Int32, options? : Options) -> ParallelOrderingResult raise MetisError
 
-pub fn node_refine(CsrGraph, FixedArray[Int], FixedArray[Int], FixedArray[Int], Float) -> FixedArray[Int] raise MetisError
+pub fn node_refine(CsrGraph, FixedArray[Int32], FixedArray[Int32], FixedArray[Int32], Float) -> FixedArray[Int32] raise MetisError
 
-pub fn part_graph_kway(CsrGraph, Int, options? : Options, target_partition_weights? : FixedArray[Float], imbalance? : FixedArray[Float]) -> PartitionResult raise MetisError
+pub fn part_graph_kway(CsrGraph, Int32, options? : Options, target_partition_weights? : FixedArray[Float], imbalance? : FixedArray[Float]) -> PartitionResult raise MetisError
 
-pub fn part_graph_recursive(CsrGraph, Int, options? : Options, target_partition_weights? : FixedArray[Float], imbalance? : FixedArray[Float]) -> PartitionResult raise MetisError
+pub fn part_graph_recursive(CsrGraph, Int32, options? : Options, target_partition_weights? : FixedArray[Float], imbalance? : FixedArray[Float]) -> PartitionResult raise MetisError
 
-pub fn part_mesh_dual(Mesh, Int, ncommon? : Int, options? : Options, target_partition_weights? : FixedArray[Float], element_weights? : FixedArray[Int], element_sizes? : FixedArray[Int]) -> MeshPartitionResult raise MetisError
+pub fn part_mesh_dual(Mesh, Int32, ncommon? : Int32, options? : Options, target_partition_weights? : FixedArray[Float], element_weights? : FixedArray[Int32], element_sizes? : FixedArray[Int32]) -> MeshPartitionResult raise MetisError
 
-pub fn part_mesh_nodal(Mesh, Int, options? : Options, target_partition_weights? : FixedArray[Float], node_weights? : FixedArray[Int], node_sizes? : FixedArray[Int]) -> MeshPartitionResult raise MetisError
+pub fn part_mesh_nodal(Mesh, Int32, options? : Options, target_partition_weights? : FixedArray[Float], node_weights? : FixedArray[Int32], node_sizes? : FixedArray[Int32]) -> MeshPartitionResult raise MetisError
 
-pub fn version() -> (Int, Int, Int)
+pub fn version() -> (Int32, Int32, Int32)
 
 // Errors
 pub(all) suberror MetisError {
@@ -39,7 +39,7 @@ pub(all) suberror MetisError {
   UnsupportedIndexWidth
 } derive(Eq, Hash)
 pub fn MetisError::equal(Self, Self) -> Bool
-pub fn MetisError::hash(Self) -> Int
+pub fn MetisError::hash(Self) -> Int32
 pub fn MetisError::hash_combine(Self, Hasher) -> Unit
 pub fn MetisError::not_equal(Self, Self) -> Bool
 
@@ -52,15 +52,15 @@ pub(all) enum CoarseningScheme {
 pub struct CsrGraph {
   // private fields
 }
-pub fn CsrGraph::CsrGraph(Int, FixedArray[Int], FixedArray[Int], ncon? : Int, vwgt? : FixedArray[Int], vsize? : FixedArray[Int], adjwgt? : FixedArray[Int]) -> Self raise MetisError
-pub fn CsrGraph::adjacency_weights(Self) -> FixedArray[Int]?
-pub fn CsrGraph::adjncy(Self) -> FixedArray[Int]
-pub fn CsrGraph::ncon(Self) -> Int
-pub fn CsrGraph::new(Int, FixedArray[Int], FixedArray[Int], ncon? : Int, vwgt? : FixedArray[Int], vsize? : FixedArray[Int], adjwgt? : FixedArray[Int]) -> Self raise MetisError
-pub fn CsrGraph::nvtxs(Self) -> Int
-pub fn CsrGraph::vertex_sizes(Self) -> FixedArray[Int]?
-pub fn CsrGraph::vertex_weights(Self) -> FixedArray[Int]?
-pub fn CsrGraph::xadj(Self) -> FixedArray[Int]
+pub fn CsrGraph::CsrGraph(Int32, FixedArray[Int32], FixedArray[Int32], ncon? : Int32, vwgt? : FixedArray[Int32], vsize? : FixedArray[Int32], adjwgt? : FixedArray[Int32]) -> Self raise MetisError
+pub fn CsrGraph::adjacency_weights(Self) -> FixedArray[Int32]?
+pub fn CsrGraph::adjncy(Self) -> FixedArray[Int32]
+pub fn CsrGraph::ncon(Self) -> Int32
+pub fn CsrGraph::new(Int32, FixedArray[Int32], FixedArray[Int32], ncon? : Int32, vwgt? : FixedArray[Int32], vsize? : FixedArray[Int32], adjwgt? : FixedArray[Int32]) -> Self raise MetisError
+pub fn CsrGraph::nvtxs(Self) -> Int32
+pub fn CsrGraph::vertex_sizes(Self) -> FixedArray[Int32]?
+pub fn CsrGraph::vertex_weights(Self) -> FixedArray[Int32]?
+pub fn CsrGraph::xadj(Self) -> FixedArray[Int32]
 
 pub(all) enum DebugFlag {
   Info
@@ -86,16 +86,16 @@ pub(all) enum InitialPartitioningScheme {
 pub struct Mesh {
   // private fields
 }
-pub fn Mesh::eind(Self) -> FixedArray[Int]
-pub fn Mesh::eptr(Self) -> FixedArray[Int]
-pub fn Mesh::ne(Self) -> Int
-pub fn Mesh::new(Int, Int, FixedArray[Int], FixedArray[Int]) -> Self raise MetisError
-pub fn Mesh::nn(Self) -> Int
+pub fn Mesh::eind(Self) -> FixedArray[Int32]
+pub fn Mesh::eptr(Self) -> FixedArray[Int32]
+pub fn Mesh::ne(Self) -> Int32
+pub fn Mesh::new(Int32, Int32, FixedArray[Int32], FixedArray[Int32]) -> Self raise MetisError
+pub fn Mesh::nn(Self) -> Int32
 
 pub(all) struct MeshPartitionResult {
-  objval : Int
-  epart : FixedArray[Int]
-  npart : FixedArray[Int]
+  objval : Int32
+  epart : FixedArray[Int32]
+  npart : FixedArray[Int32]
 }
 
 pub(all) enum ObjectiveType {
@@ -113,37 +113,37 @@ pub fn Options::set_compress(Self, Bool) -> Self
 pub fn Options::set_connected_component_ordering(Self, Bool) -> Self
 pub fn Options::set_contiguous(Self, Bool) -> Self
 pub fn Options::set_debug_flags(Self, FixedArray[DebugFlag]) -> Self
-pub fn Options::set_debug_level(Self, Int) -> Self
+pub fn Options::set_debug_level(Self, Int32) -> Self
 pub fn Options::set_drop_edges(Self, Bool) -> Self
-pub fn Options::set_imbalance_factor(Self, Int) -> Self
+pub fn Options::set_imbalance_factor(Self, Int32) -> Self
 pub fn Options::set_initial_partitioning_scheme(Self, InitialPartitioningScheme) -> Self
 pub fn Options::set_minimize_connectivity(Self, Bool) -> Self
 pub fn Options::set_no_two_hop(Self, Bool) -> Self
-pub fn Options::set_number_of_cuts(Self, Int) -> Self
-pub fn Options::set_number_of_initial_partitions(Self, Int) -> Self
-pub fn Options::set_number_of_iterations(Self, Int) -> Self
-pub fn Options::set_number_of_separators(Self, Int) -> Self
+pub fn Options::set_number_of_cuts(Self, Int32) -> Self
+pub fn Options::set_number_of_initial_partitions(Self, Int32) -> Self
+pub fn Options::set_number_of_iterations(Self, Int32) -> Self
+pub fn Options::set_number_of_separators(Self, Int32) -> Self
 pub fn Options::set_objective_type(Self, ObjectiveType) -> Self
 pub fn Options::set_on_disk(Self, Bool) -> Self
 pub fn Options::set_partitioning_scheme(Self, PartitioningScheme) -> Self
-pub fn Options::set_pruning_factor(Self, Int) -> Self
+pub fn Options::set_pruning_factor(Self, Int32) -> Self
 pub fn Options::set_refinement_scheme(Self, RefinementScheme) -> Self
-pub fn Options::set_seed(Self, Int) -> Self
+pub fn Options::set_seed(Self, Int32) -> Self
 
 pub(all) struct OrderingResult {
-  perm : FixedArray[Int]
-  iperm : FixedArray[Int]
+  perm : FixedArray[Int32]
+  iperm : FixedArray[Int32]
 }
 
 pub(all) struct ParallelOrderingResult {
-  perm : FixedArray[Int]
-  iperm : FixedArray[Int]
-  sizes : FixedArray[Int]
+  perm : FixedArray[Int32]
+  iperm : FixedArray[Int32]
+  sizes : FixedArray[Int32]
 }
 
 pub(all) struct PartitionResult {
-  objval : Int
-  part : FixedArray[Int]
+  objval : Int32
+  part : FixedArray[Int32]
 }
 
 pub(all) enum PartitioningScheme {
@@ -159,8 +159,8 @@ pub(all) enum RefinementScheme {
 }
 
 pub(all) struct VertexSeparatorResult {
-  sepsize : Int
-  part : FixedArray[Int]
+  sepsize : Int32
+  part : FixedArray[Int32]
 }
 
 // Type aliases
